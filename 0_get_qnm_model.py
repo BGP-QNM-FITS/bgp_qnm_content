@@ -43,8 +43,8 @@ THRESHOLD = 0.9999
 N_MAX = 6
 T = 100
 N_DRAWS = 1000
-INCLUDE_CHIF = False
-INCLUDE_MF = False
+INCLUDE_CHIF = True
+INCLUDE_MF = True
 
 SPH_MODE_RULES = {
     "0001": "PE",
@@ -141,6 +141,8 @@ def __main__():
             "threshold": THRESHOLD,
             "initial_modes": initial_modes,
             "candidate_modes": candidate_modes,
+            "include_chif": INCLUDE_CHIF,
+            "include_Mf": INCLUDE_MF,
         }
         print(f"Processing simulation ID: {sim_id}")
         start_time = time.time()

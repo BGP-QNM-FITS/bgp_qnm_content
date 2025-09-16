@@ -17,10 +17,10 @@ special_color_3 = to_hex("#DE6A5E")
 
 DATA_TYPE = 'news'
 T = 100
-INCLUDE_CHIF = False
-INCLUDE_MF = False
+INCLUDE_CHIF = True
+INCLUDE_MF = True
 
-NUM_SAMPLES = 10000 
+NUM_SAMPLES = 1000
 
 def get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical_modes): 
     sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
@@ -28,9 +28,6 @@ def get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical
 
     full_modes_list = [list(map(tuple, inner_list)) for inner_list in mode_content_data_dict["modes"]]
     unique_modes = {mode for modes in full_modes_list for mode in modes}
-    unique_modes_pos = {mode for modes in full_modes_list for mode in modes if mode[3] > 0}
-
-    breakpoint() 
 
     fits = [] 
 
@@ -140,6 +137,7 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, Mf_ref, chif_re
     ax_main.set_xlim([t0_vals[0], t0_vals[-1]])
     ax_main.set_xlabel(r"$t_0$ [M]")
     ax_main.set_ylabel(r"$\epsilon$")
+    ax_main.set_yscale("log")
 
     # Contour plots for specified indices
     for idx, i in enumerate(indices):
@@ -178,9 +176,11 @@ def __main__():
         mode_content_data_dict["modes"] = [mode_content_data_dict["modes"][i] for i in indices]
         mode_content_data_dict["p_values"] = [mode_content_data_dict["p_values"][i] for i in indices]
 
+        corner_indices = np.searchsorted(t0_vals_new, [10, 20, 70])
+
         sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
         Mf_ref, chif_ref = sim.Mf, sim.chif_mag
-        get_amplitude_stability_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals_new, spherical_modes)
+        get_amplitude_stability_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals_new, spherical_modes, indices=corner_indices)
 
 if __name__ == "__main__":
     __main__()
