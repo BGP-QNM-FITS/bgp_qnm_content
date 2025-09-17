@@ -351,7 +351,7 @@ def __main__():
     sim_ids = ["0001"]
     for sim_id in sim_ids:
 
-        with open(f'mode_content_files/mode_content_data_{sim_id}_SMALL2.json', 'r') as f:
+        with open(f'mode_content_files/mode_content_data_{sim_id}_4test_2.json', 'r') as f:
             mode_content_data_dict = json.load(f)
 
         t0_vals = np.array(mode_content_data_dict['times'])
