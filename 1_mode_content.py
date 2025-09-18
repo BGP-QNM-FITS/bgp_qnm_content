@@ -173,7 +173,10 @@ def plot_mode_content_testing(sim_id, mode_content_data_dict, t0_vals, spherical
 
 def classify_mode(mode):
     """Classify a mode as QNM, QQNM, CQNM, or other."""
-    if len(mode) == 4:  # Regular QNM
+    if len(mode) == 2:
+        l, m = mode
+        return "constant", (l, m), 0, True
+    elif len(mode) == 4:  # Regular QNM
         l, m, n, p = mode
         return "qnm", (l, m), n, p==1
     elif len(mode) == 8:  # QQNM
@@ -250,7 +253,10 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
         for n, mode in modes:
             type, group_key, sort_key, prograde = classify_mode(mode)
 
-            if type == "qnm":
+            if type == "constant":
+                y_positions[mode] = y_pos
+                y_pos += 0.3
+            elif type == "qnm":
                 key_positions[mode] = y_pos
                 y_pos += 0.3
             elif type == "qqnm":
@@ -315,6 +321,25 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
                         va='center',
                         ha='left'
                     )
+                elif type == "constant":
+                    y = y_positions[mode] 
+                    alpha = 1.0
+                    hatch = None
+                    mode_color = tuple(np.clip(np.array(base_color) * 0.4, 0, 1))
+                    pos = y_positions.get(mode)
+                    ordered_positions.append(pos)
+                    ordered_labels.append("")
+                    l, m  = mode
+                    label = fr"$({l},{m})$" 
+                    ax.text(
+                        t0_vals[-1] - 7 * dt,
+                        pos,
+                        label,
+                        fontsize=4,
+                        va='center',
+                        ha='left'
+                    )
+
 
                 # Draw the bar
                 ax.broken_barh(
@@ -351,7 +376,7 @@ def __main__():
     sim_ids = ["0001"]
     for sim_id in sim_ids:
 
-        with open(f'mode_content_files/mode_content_data_{sim_id}_4test_2.json', 'r') as f:
+        with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
             mode_content_data_dict = json.load(f)
 
         t0_vals = np.array(mode_content_data_dict['times'])

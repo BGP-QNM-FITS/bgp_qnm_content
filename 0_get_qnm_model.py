@@ -12,32 +12,19 @@ import time
 DATA_TYPE = 'news'
 L_MAX = 7
 
-SPHERICAL_MODES_PE = [(2, 2),
-                      (3, 2), 
-                      (4, 4), (4, 2),
-                      (5, 4), (5, 2),
-                      (6, 6), (6, 4),
-                      (7, 6)]
+SPHERICAL_MODES_PE = [(2, 2), (3, 2), (4, 2), 
+                      (4, 4), (5, 4), (6, 4), 
+                      (6, 6), (7, 6)]
 
 
-SPHERICAL_MODES_P = [(2, 2), (2, 1),
-                    (3, 3), (3, 2),
-                    (4, 4), (4, 3),
-                    (5, 5), (5, 4),
-                    (6, 6), (6, 5),
-                    (7, 7), (7, 6)]
+SPHERICAL_MODES_P = [(2, 2), (3, 2),
+                     (3, 3), (4, 3), 
+                     (4, 4), (5, 4),
+                     (5, 5), (6, 5),
+                     (6, 6), (7, 6)] 
 
 SPHERICAL_MODES_E = SPHERICAL_MODES_PE + [(l, -m) for l, m in SPHERICAL_MODES_PE]
 SPHERICAL_MODES_ALL = SPHERICAL_MODES_P + [(l, -m) for l, m in SPHERICAL_MODES_P]
-
-SPHERICAL_MODES_EVERYTHING_PE = [(2, 2),
-                                (3, 2), 
-                                (4, 4), (4, 2),
-                                (5, 4), (5, 2),
-                                (6, 6), (6, 4), (6, 2),
-                                (7, 6), (7, 4), (7, 2)]
-
-SPHERICAL_MODES_EVERYTHING = [(l, m) for l in range(2, L_MAX + 1) for m in range(-l, l + 1)]
 
 THRESHOLD = 0.9999
 N_MAX = 6
@@ -66,7 +53,7 @@ log_threshold = np.log(THRESHOLD)
 
 FILENAME = f'mode_content_files/mode_content_data'
 
-t0_vals = np.arange(0, 80.1, 1)
+t0_vals = np.arange(0, 60.1, 2)
 
 def get_mode_list(sim_id, initial_modes, candidate_modes, spherical_modes):
     
@@ -92,7 +79,7 @@ def get_mode_list(sim_id, initial_modes, candidate_modes, spherical_modes):
             t0=t0,
             candidate_modes=candidate_modes,
             log_threshold=log_threshold,
-            candidate_type="all",
+            candidate_type="prograde_sequential",
             num_draws=N_DRAWS,
             T=T,
             spherical_modes=spherical_modes,
@@ -111,30 +98,27 @@ def __main__():
     #sim_ids = [f"{i:04}" for i in range(1, 14)]
     #sim_ids = ["0001"]
 
-    sim_ids = ["0001"] 
+    sim_ids = ["0001", "0010"] 
 
     for sim_id in sim_ids:
 
-        #if SPH_MODE_RULES[sim_id] == "PE":
-        #    spherical_modes = SPHERICAL_MODES_PE
-        #elif SPH_MODE_RULES[sim_id] == "P":
-        #    spherical_modes = SPHERICAL_MODES_P
-        #elif SPH_MODE_RULES[sim_id] == "E":
-        #    spherical_modes = SPHERICAL_MODES_E
-        #elif SPH_MODE_RULES[sim_id] == "ALL":
-        #    spherical_modes = SPHERICAL_MODES_ALL 
+        if SPH_MODE_RULES[sim_id] == "PE":
+            spherical_modes = SPHERICAL_MODES_PE
+        elif SPH_MODE_RULES[sim_id] == "P":
+            spherical_modes = SPHERICAL_MODES_P
+        elif SPH_MODE_RULES[sim_id] == "E":
+            spherical_modes = SPHERICAL_MODES_E
+        elif SPH_MODE_RULES[sim_id] == "ALL":
+            spherical_modes = SPHERICAL_MODES_ALL 
 
-        spherical_modes = [(2,2), (3,2), (4,2)]
-
-        initial_modes = [] #[(*s, 0, 1) for s in spherical_modes]
+        initial_modes = [(*s, 0, 1) for s in spherical_modes]
         candidate_modes = [(*s, n, 1) for s in spherical_modes for n in range(0, N_MAX + 1)] + \
-                        [(*s, n, -1) for s in spherical_modes for n in range(0, N_MAX + 1)] 
-                        #spherical_modes + \
-                        #[
-                        #    (2, 2, 0, 1, 2, 2, 0, 1),
-                        #    (3, 3, 0, 1, 3, 3, 0, 1),
-                        #    (2, 2, 0, 1, 2, 2, 0, 1, 2, 2, 0, 1)
-                        #]
+                        [(*s, n, -1) for s in spherical_modes for n in range(0, N_MAX + 1)] + \
+                        spherical_modes + [
+                            (2, 2, 0, 1, 2, 2, 0, 1),
+                            (3, 3, 0, 1, 3, 3, 0, 1),  
+                            (2, 2, 0, 1, 2, 2, 0, 1, 2, 2, 0, 1)
+                        ]
 
         mode_selection_data = {
             "sim_id": sim_id,
@@ -152,7 +136,7 @@ def __main__():
         end_time = time.time()
         mode_selection_data[f"run_time"] = end_time - start_time
 
-        with open(f'{FILENAME}_{sim_id}_4test_2.json', 'w') as f:
+        with open(f'{FILENAME}_{sim_id}.json', 'w') as f:
             json.dump(mode_selection_data, f)
 
 if __name__ == "__main__":
