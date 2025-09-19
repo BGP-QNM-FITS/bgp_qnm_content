@@ -30,17 +30,19 @@ SPH_MODE_RULES = {
     "0013": "ALL",
 }
 
-SPHERICAL_MODES_PE = [(2, 2),
-                      (4, 4), 
-                      (6, 6)]
+SPHERICAL_MODES_PE = [(2, 2), (3, 2), (4, 2), 
+                      (4, 4), (5, 4), (6, 4), 
+                      (6, 6), (7, 6)]
 
 
-SPHERICAL_MODES_P = [(2, 2),
-                    (3, 3),
-                    (4, 4),
-                    (5, 5),
-                    (6, 6),
-                    (7, 7),]
+SPHERICAL_MODES_P = [(2, 2), (3, 2),
+                     (3, 3), (4, 3), 
+                     (4, 4), (5, 4),
+                     (5, 5), (6, 5),
+                     (6, 6), (7, 6)] 
+
+SPHERICAL_MODES_E = SPHERICAL_MODES_PE + [(l, -m) for l, m in SPHERICAL_MODES_PE]
+SPHERICAL_MODES_ALL = SPHERICAL_MODES_P + [(l, -m) for l, m in SPHERICAL_MODES_P]
 
 def group_sort_key(item):
         group = item[0]
@@ -373,7 +375,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
 
 def __main__():
     #sim_ids = [f"{i:04}" for i in range(1, 14)]
-    sim_ids = ["0001"]
+    sim_ids = ["0001", "0002", "0003"]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
@@ -382,20 +384,20 @@ def __main__():
         t0_vals = np.array(mode_content_data_dict['times'])
         spherical_modes = [tuple(mode) for mode in mode_content_data_dict['spherical_modes']]
 
-        #if SPH_MODE_RULES[sim_id] == "PE":
-        #    spherical_modes = SPHERICAL_MODES_PE
-        #elif SPH_MODE_RULES[sim_id] == "P":
-        #    spherical_modes = SPHERICAL_MODES_P
-        #elif SPH_MODE_RULES[sim_id] == "E":
-        #    spherical_modes = SPHERICAL_MODES_PE
-        #elif SPH_MODE_RULES[sim_id] == "ALL":
-        #    spherical_modes = SPHERICAL_MODES_P 
+        if SPH_MODE_RULES[sim_id] == "PE":
+            spherical_modes = SPHERICAL_MODES_PE
+        elif SPH_MODE_RULES[sim_id] == "P":
+            spherical_modes = SPHERICAL_MODES_P
+        elif SPH_MODE_RULES[sim_id] == "E":
+            spherical_modes = SPHERICAL_MODES_E
+        elif SPH_MODE_RULES[sim_id] == "ALL":
+            spherical_modes = SPHERICAL_MODES_ALL  
 
         output_dir = f"figures/{sim_id}"
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
-        #plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes, modes_to_plot=spherical_modes)
-        plot_mode_content_testing(sim_id, mode_content_data_dict, t0_vals, spherical_modes)
+        plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes)
+        #plot_mode_content_testing(sim_id, mode_content_data_dict, t0_vals, spherical_modes)
 
 if __name__ == "__main__":
     __main__()

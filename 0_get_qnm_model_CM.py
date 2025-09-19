@@ -99,7 +99,7 @@ def get_mode_list(sim_id, initial_modes, candidate_modes, spherical_modes):
 
 def __main__():
 
-    sim_ids = [f"{i:04}" for i in range(1, 14)]
+    sim_ids = ["0010"] + [f"{i:04}" for i in range(13, 0, -1) if i % 10 != 0]
 
     for sim_id in sim_ids:
 
