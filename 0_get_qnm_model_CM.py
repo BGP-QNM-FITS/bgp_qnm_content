@@ -99,7 +99,7 @@ def get_mode_list(sim_id, initial_modes, candidate_modes, spherical_modes):
 
 def __main__():
 
-    sim_ids = ["0010"] + [f"{i:04}" for i in range(13, 0, -1) if i % 10 != 0]
+    sim_ids = ["0008", "0009", "0013", "0011", "0012", "0010"]
 
     for sim_id in sim_ids:
 
@@ -139,12 +139,13 @@ def __main__():
                                      
             spherical_modes = SPHERICAL_MODES_ALL
 
-        initial_modes = [(*s, 0, 1) for s in spherical_modes]
+        initial_modes = [(*s, 0, 1 if s[1] > 0 else -1) for s in spherical_modes]
         candidate_modes = [(*s, n, 1) for s in spherical_modes for n in range(0, N_MAX + 1)] + \
                         [(*s, n, -1) for s in spherical_modes for n in range(0, N_MAX + 1)] + \
                         spherical_modes + candidate_mode_extras
         
         print(f"Starting mode selection for simulation ID: {sim_id}")
+        print(f"Using initial modes: {initial_modes}")
         print(f"Using spherical modes: {spherical_modes}")
         print(f"Candidate modes: {candidate_modes}")
 

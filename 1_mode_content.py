@@ -374,8 +374,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
 
 
 def __main__():
-    #sim_ids = [f"{i:04}" for i in range(1, 14)]
-    sim_ids = ["0001", "0002", "0003"]
+    sim_ids = [f"{i:04}" for i in range(1, 14)]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
