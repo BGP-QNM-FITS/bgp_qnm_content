@@ -42,7 +42,7 @@ def plot_total_mode_count(sim_id, mode_content_data_dict, t0_vals):
     plt.close(fig)
 
 def __main__():
-    sim_ids = ["0001"]
+    sim_ids = ["0001", "0002", "0003", "0004", "0005", "0006", "0007", "0008", "0009", "0010"]
     for sim_id in sim_ids:
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
             mode_content_data_dict = json.load(f)

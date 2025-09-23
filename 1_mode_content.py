@@ -10,9 +10,7 @@ import os
 config = PlotConfig()
 config.apply_style()
 
-special_color_1 = to_hex("#8B5FBF")
-special_color_2 = to_hex("#C26C88")
-special_color_3 = to_hex("#DE6A5E")
+special_color_1 = to_hex("#C26C88")
 
 SPH_MODE_RULES = {
     "0001": "PE",
@@ -43,6 +41,26 @@ SPHERICAL_MODES_P = [(2, 2), (3, 2),
 
 SPHERICAL_MODES_E = SPHERICAL_MODES_PE + [(l, -m) for l, m in SPHERICAL_MODES_PE]
 SPHERICAL_MODES_ALL = SPHERICAL_MODES_P + [(l, -m) for l, m in SPHERICAL_MODES_P]
+
+L_GROUPS = [2, 3, 4, 5, 6]
+custom_cmap = LinearSegmentedColormap.from_list("custom_colormap", config.colors)
+l_to_color = {
+    l: custom_cmap(i / (len(L_GROUPS) - 1))
+    for i, l in enumerate(L_GROUPS)
+}
+
+nonlinear_modes = {
+    (2,2,0,1,2,2,0,1): r'$(2,2,0,+)^2$',
+    (2,2,0,1,3,3,0,1): r'$(2,2,0,+) \times (3,3,0,+)$',
+    (3,3,0,1,3,3,0,1): r'$(3,3,0,+)^2$',
+    (2,2,0,1,4,4,0,1): r'$(2,2,0,+) \times (4,4,0,+)$',
+    (2,2,0,1,2,2,0,1,2,2,0,1): r'$(2,2,0,+)^3$',
+    (2,-2,0,-1,2,-2,0,-1): r'$(2,-2,0,-)^2$',
+    (2,-2,0,-1,3,-3,0,-1): r'$(2,-2,0,-) \times (3,-3,0,-)$',
+    (3,-3,0,-1,3,-3,0,-1): r'$(3,-3,0,-)^2$',
+    (2,-2,0,-1,4,-4,0,-1): r'$(2,-2,0,-) \times (4,-4,0,-)$',
+    (2,-2,0,-1,2,-2,0,-1,2,-2,0,-1): r'$(2,-2,0,-)^3$'
+}
 
 def group_sort_key(item):
         group = item[0]
@@ -135,7 +153,7 @@ def plot_mode_content_testing(sim_id, mode_content_data_dict, t0_vals, spherical
                 elif len(mode) == 8:
                     color, alpha = special_color_1, 1.0
                 elif len(mode) == 12:
-                    color, alpha = special_color_2, 1.0
+                    color, alpha = special_color_1, 1.0
                 
                 # Draw rectangle
                 ax.broken_barh(
@@ -184,11 +202,11 @@ def classify_mode(mode):
     elif len(mode) == 8:  # QQNM
         l1, m1, n1, s1, l2, m2, n2, s2 = mode
         l_combined, m_combined = l1 + l2, m1 + m2
-        return "qqnm", (l_combined, m_combined), max(n1, n2), True
+        return "qqnm", (l_combined, m_combined), 7, True
     elif len(mode) == 12:  # CQNM
         l1, m1, n1, s1, l2, m2, n2, s2, l3, m3, n3, s3 = mode
         l_combined, m_combined = l1 + l2 + l3, m1 + m2 + m3
-        return "cqnm", (l_combined, m_combined), max(n1, n2, n3), True
+        return "cqnm", (l_combined, m_combined), 7, True
     
 def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes, 
                                 modes_to_plot=None):
@@ -214,9 +232,6 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
     dt = np.median(np.diff(t0_vals))
     bar_height = 0.2
     
-    # Create figure
-    fig, ax = plt.subplots(figsize=(config.fig_width_2, config.fig_height), dpi=300)
-    
     # If modes_to_plot is specified, filter the spherical modes
     spherical_modes_filtered = set(spherical_modes)
     if modes_to_plot is not None:
@@ -233,22 +248,21 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
     # Sort entries within groups
     for group in lm_groups:
         lm_groups[group] = sorted(list(lm_groups[group]), reverse=True)
+
+    # Create figure
+    fig, ax = plt.subplots(figsize=(config.fig_width_2, config.fig_height_2 * (len(lm_groups) / 7)), dpi=300)
     
     # Sort the groups
-    sorted_groups = sorted(lm_groups.items(), key=lambda x: (2, -x[0][0], -x[0][1]) 
+    sorted_groups = sorted(lm_groups.items(), key=lambda x: (0,) if x[0] == ('QQNM',) 
+                          else (1,) if x[0] == ('CQNM',) 
+                          else (2, -x[0][0], -x[0][1]) 
                           if isinstance(x[0], tuple) and len(x[0]) == 2 
-                          else (0,) if x[0] == ('QQNM_other',) 
-                          else (1,))
-    
-    # Setup colors
-    colors = LinearSegmentedColormap.from_list("custom_colormap", config.colors)(
-        np.linspace(0, 1, len(lm_groups))
-    )
+                          else (3,))
     
     # Calculate positions
     y_pos, y_ticks, y_labels = 0, [], []
     y_positions, key_positions = {}, {}
-    
+
     for group, modes in sorted_groups:
         group_start = y_pos
         # Separate modes by type while preserving order
@@ -278,6 +292,14 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
 
     ordered_positions = []
     ordered_labels = []
+
+    nonlinear_color_adjust = {
+            (2,2,0,1,2,2,0,1): 0.9,
+            (2,2,0,1,3,3,0,1): 0.9,
+            (3,3,0,1,3,3,0,1): 0.9,
+            (2,2,0,1,4,4,0,1): 0.8,
+            (2,2,0,1,2,2,0,1,2,2,0,1): 0.7
+        }
     
     # Plot for each time
     for t_idx, (t0, modes_at_t0) in enumerate(zip(t0_vals, full_modes_list)):
@@ -288,8 +310,8 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
 
         # Process all modes (QNM, QQNM, CQNM) in the same loop
         for group, modes in sorted_groups:
-            color_idx = [g[0] for g in sorted_groups].index(group)
-            base_color = colors[color_idx]
+            ell, _ = group
+            base_color = color = l_to_color.get(ell, "#888888") 
 
             for n, mode in modes:
                 if mode not in modes_set:
@@ -298,7 +320,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
                 if type == "qnm":
                     y = key_positions[mode]
                     l, m, n, _ = mode
-                    alpha = 1.0 - 0.1 * n
+                    alpha = 1.0 - 0.12 * n
                     hatch = '///////////' if (mode in modes_set and (l, m, n, -1) in modes_set) else None
                     mode_color = base_color
                     pos = key_positions.get(mode)
@@ -309,25 +331,17 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
                     y = y_positions[mode] 
                     alpha = 1.0
                     hatch = None
-                    mode_color = tuple(np.clip(np.array(base_color) * 0.4, 0, 1))
+                    mode_color = special_color_1
                     pos = y_positions.get(mode)
                     ordered_positions.append(pos)
                     ordered_labels.append("")
                     l, m, n, p = mode[:4]
                     label = fr"$({l},{m},{n},{p})^2$" if type == "qqnm" else fr"$({l},{m},{n},{p})^3$"
-                    ax.text(
-                        t0_vals[-1] - 7 * dt,
-                        pos,
-                        label,
-                        fontsize=4,
-                        va='center',
-                        ha='left'
-                    )
                 elif type == "constant":
                     y = y_positions[mode] 
                     alpha = 1.0
                     hatch = None
-                    mode_color = tuple(np.clip(np.array(base_color) * 0.4, 0, 1))
+                    mode_color = special_color_1
                     pos = y_positions.get(mode)
                     ordered_positions.append(pos)
                     ordered_labels.append("")
@@ -353,28 +367,94 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
                     hatch=hatch
                 )
 
-    ax.set_yticks(ordered_positions)
-    ax.set_yticklabels(ordered_labels, fontsize=4)
+    unique_positions = []
+    unique_labels = []
+    seen_positions = set()
+    for label, pos in zip(ordered_labels, ordered_positions):
+        if pos not in seen_positions:
+            if label == '(2,2,0)':
+                seen_positions.add(pos)
+                unique_positions.append(pos)
+                unique_labels.append("") 
+            else:
+                unique_positions.append(pos)
+                unique_labels.append(label if label else " ") 
+                seen_positions.add(pos)
+
+    ax.set_yticks(unique_positions)
+    ax.set_yticklabels(unique_labels)
+
+
+    for label, pos in zip(ordered_labels, ordered_positions):
+        if label == '(2,2,0)':
+            ax.text(
+                ax.get_xlim()[0] + 1.73 * dt,
+                pos,                
+                label,
+                va='bottom',                  
+                ha='right'
+            )
+            break 
+
+    for mode, y in key_positions.items():
+        l, m, n, p = mode 
+        if (l, m) == (2, 2) and n != 0:
+            ax.text(
+                t0_vals[0] - 0.5 * dt,  # Place label to the left of the bar
+                y,
+                fr"$n={n}$",
+                fontsize=4.5,
+                va='center',
+                ha='right'
+            )
+
+    nonlinear_pos = {
+            (2,2,0,1,2,2,0,1): 54,
+            (2,2,0,1,3,3,0,1): 54,
+            (3,3,0,1,3,3,0,1): 54,
+            (2,2,0,1,4,4,0,1): 40,
+            (2,2,0,1,2,2,0,1,2,2,0,1): 23
+        }
+
+    for nonlinear_mode in nonlinear_modes.keys():
+        # Find the last time index where this mode appears
+        last_idx = None
+        for t_idx, modes_at_t0 in enumerate(full_modes_list):
+            if nonlinear_mode in modes_at_t0:
+                last_idx = t_idx
+        if last_idx is not None and nonlinear_mode in y_positions:
+            pos = y_positions.get(nonlinear_mode)
+            x_pos = t0_vals[last_idx]
+            ax.text(
+                nonlinear_pos[nonlinear_mode],
+                pos + bar_height * 0.9,  # slightly above the bar
+                nonlinear_modes[nonlinear_mode],
+                fontsize=6,
+                va='bottom',
+                ha='center'
+            )
 
     # Show threshold region
     threshold_idx = next((i for i, p in enumerate(p_values) if p < 0.7), None)
     if threshold_idx is not None:
-        ax.axvspan(0, t0_vals[threshold_idx], color='grey', alpha=0.5, zorder=0)
+        ax.axvspan(0, t0_vals[threshold_idx], color='grey', alpha=0.2, zorder=0)
 
-    ax.set_xlabel(r"$t_0 [M]$")
-    ax.set_ylabel(r"Mode content")
+    ax.set_xlabel(r"Ringdown start time $t_0 \, [M]$")
     ax.set_xlim(t0_vals[0], t0_vals[-1])
     ax.set_ylim(-0.5, y_pos - 0.3)
+    ax.tick_params(axis='y', direction='out', which='both', right=False)
+
+    ax.xaxis.set_minor_locator(FixedLocator(np.arange(t0_vals[0], t0_vals[-1] + dt, 5)))
     
     plt.tight_layout()
     outdir = f"figures/{sim_id}"
     os.makedirs(outdir, exist_ok=True)
-    plt.savefig(f"{outdir}/1_mode_content_{sim_id}.pdf", bbox_inches="tight")
+    plt.savefig(f"{outdir}/mode_content_{sim_id}.pdf", bbox_inches="tight")
     plt.close()
 
 
 def __main__():
-    sim_ids = [f"{i:04}" for i in range(1, 14)]
+    sim_ids = ["0010"]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
@@ -392,10 +472,12 @@ def __main__():
         elif SPH_MODE_RULES[sim_id] == "ALL":
             spherical_modes = SPHERICAL_MODES_ALL  
 
+        plotting_modes = [(2,2), (3,3), (4,4), (5,5), (6,6)]
+
         output_dir = f"figures/{sim_id}"
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
-        plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes)
+        plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes, modes_to_plot=plotting_modes)
         #plot_mode_content_testing(sim_id, mode_content_data_dict, t0_vals, spherical_modes)
 
 if __name__ == "__main__":

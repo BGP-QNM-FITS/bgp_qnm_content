@@ -10,9 +10,7 @@ import bgp_qnm_fits as bgp
 config = PlotConfig()
 config.apply_style()
 
-special_color_1 = to_hex("#8B5FBF")
-special_color_2 = to_hex("#C26C88")
-special_color_3 = to_hex("#DE6A5E")
+special_color_1 = to_hex("#C26C88")
 
 DATA_TYPE = 'news'
 T = 100
@@ -25,6 +23,27 @@ l_to_color = {
     l: custom_cmap(i / (len(L_GROUPS) - 1))
     for i, l in enumerate(L_GROUPS)
 }
+
+nonlinear_modes = {
+    (2,2,0,1,2,2,0,1): r'$(2,2,0,+)^2$',
+    (2,2,0,1,3,3,0,1): r'$(2,2,0,+) \times (3,3,0,+)$',
+    (3,3,0,1,3,3,0,1): r'$(3,3,0,+)^2$',
+    (2,2,0,1,4,4,0,1): r'$(2,2,0,+) \times (4,4,0,+)$',
+    (2,2,0,1,2,2,0,1,2,2,0,1): r'$(2,2,0,+)^3$',
+    (2,-2,0,-1,2,-2,0,-1): r'$(2,-2,0,-)^2$',
+    (2,-2,0,-1,3,-3,0,-1): r'$(2,-2,0,-) \times (3,-3,0,-)$',
+    (3,-3,0,-1,3,-3,0,-1): r'$(3,-3,0,-)^2$',
+    (2,-2,0,-1,4,-4,0,-1): r'$(2,-2,0,-) \times (4,-4,0,-)$',
+    (2,-2,0,-1,2,-2,0,-1,2,-2,0,-1): r'$(2,-2,0,-)^3$'
+}
+
+nonlinear_linestyle = {
+            (2,2,0,1,2,2,0,1): '-',
+            (2,2,0,1,3,3,0,1): '-',
+            (3,3,0,1,3,3,0,1): ':',
+            (2,2,0,1,4,4,0,1): '--',
+            (2,2,0,1,2,2,0,1,2,2,0,1): '-'
+        }
 
 
 def get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical_modes): 
@@ -94,62 +113,75 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, spherical_modes
     full_modes_list = [list(map(tuple, inner_list)) for inner_list in mode_content_data_dict["modes"]]
     unique_modes = list(set(mode for modes in full_modes_list for mode in modes))
     fits = get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical_modes)
-    colors = LinearSegmentedColormap.from_list("custom_colormap", config.colors)(np.linspace(0, 1, l_max+1))
 
-    for l in range(2, l_max+1):
-        for m in range(-l, l+1):
-            possible_modes_for_plot = [mode for mode in unique_modes if (len(mode) == 4 or len(mode) == 2) and mode[0] == l and mode[1] == m] + \
-                        [mode for mode in unique_modes if len(mode) == 8 and (mode[0] + mode[4] == l) and (mode[1] + mode[5] == m)] + \
-                        [mode for mode in unique_modes if len(mode) == 12 and (mode[0] + mode[4] + mode[8] == l) and (mode[1] + mode[5] + mode[9] == m)]
-            
-            if possible_modes_for_plot == []:
-                continue
+    groups_to_plot = [(2,2), (4,4), (6,6)]
+    fig, axes = plt.subplots(1, 3, figsize=(config.fig_width_2, config.fig_height), sharey=True, dpi=300)
 
-            fig, ax = plt.subplots(figsize=(config.fig_width, config.fig_height), dpi=300)
+    for ax, (l, m) in zip(axes, groups_to_plot):
+        possible_modes_for_plot = [mode for mode in unique_modes if (len(mode) == 4 or len(mode) == 2) and mode[0] == l and mode[1] == m] + \
+                                [mode for mode in unique_modes if len(mode) == 8 and (mode[0] + mode[4] == l) and (mode[1] + mode[5] == m)] + \
+                                [mode for mode in unique_modes if len(mode) == 12 and (mode[0] + mode[4] + mode[8] == l) and (mode[1] + mode[5] + mode[9] == m)]
 
-            for mode in possible_modes_for_plot:
-                label=f'{mode}'
-                if len(mode) == 4:
-                    _, em, n, p = mode
-                    if np.sign(em) != np.sign(p):
-                        continue
-                    color = colors[l-2]
-                elif len(mode) == 2:
-                    p = 1
-                    n = 0
-                    color = special_color_3
-                elif len(mode) == 8:
-                    p = 1
-                    n = 0
-                    color = special_color_1
-                elif len(mode) == 12:
-                    p = 1
-                    n = 0 
-                    color = special_color_2
-                print(f'Plotting {mode=}') 
-                runs = masks(mode, t0_vals, full_modes_list)
-                for j, run in enumerate(runs):
-                    temp_t0_vals = t0_vals[run]
-                    amps = np.zeros_like(temp_t0_vals)
-                    for i, t0 in enumerate(temp_t0_vals):
-                        tidx = t0_vals.tolist().index(t0)
-                        idx = full_modes_list[tidx].index(mode)
-                        amps[i] = np.median(fits[tidx].fit["sample_amplitudes"][:, idx]) 
-                    ax.plot(temp_t0_vals, amps,
-                            color=color, alpha=1-0.1*n, lw=2.5-0.25*n,
-                            label=label if j==0 and p==1 else None,
-                            ls = '-'
-                            )
+        if not possible_modes_for_plot:
+            continue
 
-            ax.set_xlim([t0_vals[0], t0_vals[-1]])
-            ax.set_xlabel(r"$t_0$ [M]")
-            ax.set_ylabel("Amplitude")
-            ax.set_yscale('log')
+        base_color = l_to_color.get(l, "#888888")
 
-            ax.legend(loc='upper right', frameon=False, fontsize=8)
+        for mode in possible_modes_for_plot:
+            label = nonlinear_modes[mode] if mode in nonlinear_modes else ''
+            if len(mode) == 4:
+                _, em, n, p = mode
+                if np.sign(em) != np.sign(p):
+                    continue
+                alpha = 1-0.1*n
+                color = base_color 
+                ls = '-'
+                lw = 2.5-0.25*n
+            elif len(mode) == 2:
+                p = 1
+                n = 0
+                alpha = 1.0 
+                color = special_color_1
+                ls = nonlinear_linestyle.get(mode, '-')
+                lw = 1.5
+            elif len(mode) == 8 or len(mode) == 12:
+                p = 1
+                n = 0
+                alpha = 1.0 
+                color = special_color_1
+                ls = nonlinear_linestyle.get(mode, '-')
+                lw = 1.5
 
-            plt.savefig(f"figures/{sim_id}/2_amplitude_stability_{sim_id}_{l}{m}.pdf", bbox_inches="tight")
-            plt.close()
+            runs = masks(mode, t0_vals, full_modes_list)
+            for run in runs:
+                temp_t0_vals = t0_vals[run]
+                amps = np.zeros_like(temp_t0_vals)
+                for i, t0 in enumerate(temp_t0_vals):
+                    tidx = t0_vals.tolist().index(t0)
+                    idx = full_modes_list[tidx].index(mode)
+                    amps[i] = np.median(fits[tidx].fit["sample_amplitudes"][:, idx])
+                if len(temp_t0_vals) > 1:
+                    ax.plot(temp_t0_vals - 1, amps,
+                            color=color, alpha=alpha, lw=lw,
+                            label=label if run[0] == runs[0][0] else "",
+                            ls=ls)
+                else:
+                    ax.plot([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [amps[0], amps[0]],
+                            color=color, alpha=alpha, lw=lw,
+                            label=label if run[0] == runs[0][0] else "",
+                            ls=ls)
+
+        ax.set_xlim([t0_vals[0], t0_vals[-1]])
+        ax.set_xlabel(r"Start time $t_0 \, [M]$")
+        ax.set_title(fr"$\ell = m = {m}$")
+        ax.set_yscale('log')
+        ax.legend(loc='upper right', frameon=False, fontsize=4.5)
+
+    axes[0].set_ylabel(r"$|\hat{C}_{\alpha}|$")
+    plt.subplots_adjust(wspace=0.05) 
+    plt.tight_layout()
+    plt.savefig(f"figures/{sim_id}/amplitude_stability_{sim_id}.pdf", bbox_inches="tight")
+    plt.close()
 
 def __main__():
     #sim_ids = [f"{i:04}" for i in range(1, 14)]
