@@ -1,0 +1,7 @@
+Mode Content for Simulation 0006
+========================================
+
+.. image:: figures/0006/mode_content/mode_content.png
+   :width: 900px
+   :alt: mode_content.png
+

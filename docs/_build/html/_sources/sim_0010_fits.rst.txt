@@ -1,0 +1,23 @@
+Fits for Simulation 0010
+========================================
+
+.. image:: figures/0010/fits/fits_22.png
+   :width: 900px
+   :alt: fits_22.png
+
+.. image:: figures/0010/fits/fits_33.png
+   :width: 900px
+   :alt: fits_33.png
+
+.. image:: figures/0010/fits/fits_44.png
+   :width: 900px
+   :alt: fits_44.png
+
+.. image:: figures/0010/fits/fits_55.png
+   :width: 900px
+   :alt: fits_55.png
+
+.. image:: figures/0010/fits/fits_66.png
+   :width: 900px
+   :alt: fits_66.png
+
