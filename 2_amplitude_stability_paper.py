@@ -137,7 +137,7 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, spherical_modes
                 alpha = 1-0.1*n
                 color = base_color 
                 ls = '-'
-                lw = 2.5-0.25*n
+                lw = 2-0.25*n
             elif len(mode) == 2:
                 p = 1
                 n = 0
@@ -170,13 +170,13 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, spherical_modes
                             color=color, alpha=alpha, lw=lw,
                             label=label if run[0] == runs[0][0] else "",
                             ls=ls)
-                    ax.fill_between(temp_t0_vals - 1, lowers, uppers, color=color, alpha=0.15, linewidth=0)
+                    ax.fill_between(temp_t0_vals - 1, lowers, uppers, color=color, alpha=0.4, linewidth=0)
                 else:
                     ax.plot([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [amps[0], amps[0]],
                             color=color, alpha=alpha, lw=lw,
                             label=label if run[0] == runs[0][0] else "",
                             ls=ls)
-                    ax.fill_between([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [lowers[0], lowers[0]], [uppers[0], uppers[0]], color=color, alpha=0.15, linewidth=0)
+                    ax.fill_between([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [lowers[0], lowers[0]], [uppers[0], uppers[0]], color=color, alpha=0.4, linewidth=0)
 
         threshold_idx = next((i for i, p in enumerate(p_values) if p < 0.7), None)
         if threshold_idx is not None:
@@ -191,7 +191,7 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, spherical_modes
     axes[0].set_ylabel(r"$|\hat{C}_{\alpha}|$")
     plt.subplots_adjust(wspace=0.05) 
     plt.tight_layout()
-    plt.savefig(f"figures/{sim_id}/amplitude_stability_{sim_id}.pdf", bbox_inches="tight")
+    plt.savefig(f"docs/figures/{sim_id}/amplitude_stability/amplitude_stability_{sim_id}.pdf", bbox_inches="tight")
     plt.close()
 
 def __main__():

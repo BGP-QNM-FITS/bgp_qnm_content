@@ -372,9 +372,6 @@ def __main__():
 
         spherical_modes, plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
 
-        output_dir = f"figures/{sim_id}"
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
         plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes, modes_to_plot=plotting_modes)
 
 if __name__ == "__main__":

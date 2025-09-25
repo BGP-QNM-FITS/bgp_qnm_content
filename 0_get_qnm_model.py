@@ -56,7 +56,7 @@ log_threshold = np.log(THRESHOLD)
 
 FILENAME = f'mode_content_files/mode_content_data'
 
-t0_vals = np.arange(0, 60.1, 2)
+t0_vals = np.arange(1, 60, 2)
 
 def get_mode_list(sim_id, initial_modes, candidate_modes, spherical_modes):
     
@@ -99,7 +99,7 @@ def get_mode_list(sim_id, initial_modes, candidate_modes, spherical_modes):
 
 def __main__():
 
-    sim_ids = ["0012"]
+    sim_ids = ["0010"]
 
     for sim_id in sim_ids:
 
@@ -143,7 +143,7 @@ def __main__():
         candidate_modes = [(*s, n, 1) for s in spherical_modes for n in range(0, N_MAX + 1)] + \
                         [(*s, n, -1) for s in spherical_modes for n in range(0, N_MAX + 1)] + \
                         spherical_modes + candidate_mode_extras
-        
+
         print(f"Starting mode selection for simulation ID: {sim_id}")
         print(f"Using initial modes: {initial_modes}")
         print(f"Using spherical modes: {spherical_modes}")
@@ -164,7 +164,7 @@ def __main__():
         end_time = time.time()
         mode_selection_data[f"run_time"] = end_time - start_time
 
-        with open(f'{FILENAME}_{sim_id}.json', 'w') as f:
+        with open(f'{FILENAME}_{sim_id}_odd.json', 'w') as f:
             json.dump(mode_selection_data, f)
 
 if __name__ == "__main__":

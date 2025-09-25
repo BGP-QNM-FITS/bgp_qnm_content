@@ -455,7 +455,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
     ax.xaxis.set_minor_locator(FixedLocator(np.arange(t0_vals[0], t0_vals[-1] + dt, 5)))
     
     plt.tight_layout()
-    outdir = f"figures/{sim_id}"
+    outdir = f"docs/figures/{sim_id}"
     os.makedirs(outdir, exist_ok=True)
     plt.savefig(f"{outdir}/mode_content_{sim_id}.pdf", bbox_inches="tight")
     plt.close()
@@ -482,9 +482,6 @@ def __main__():
 
         plotting_modes = [(2,2), (3,3), (4,4), (5,5), (6,6)]
 
-        output_dir = f"figures/{sim_id}"
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
         plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes, modes_to_plot=plotting_modes)
         #plot_mode_content_testing(sim_id, mode_content_data_dict, t0_vals, spherical_modes)
 

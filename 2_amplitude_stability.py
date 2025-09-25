@@ -59,7 +59,7 @@ def get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical
     tuned_param_dict_GP = bgp.get_tuned_param_dict("GP", data_type=DATA_TYPE)[sim_id]
 
     full_modes_list = [list(map(tuple, inner_list)) for inner_list in mode_content_data_dict["modes"]]
-    unique_modes = {mode for modes in full_modes_list for mode in modes}
+    unique_modes = list({mode for modes in full_modes_list for mode in modes})
 
     fits = [] 
 
@@ -72,6 +72,8 @@ def get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical
                                 bgp.kernel_GP, 
                                 t0=t0_vals, 
                                 T=T, 
+                                decay_corrected=True,
+                                strain_parameters=True,
                                 num_samples=NUM_SAMPLES,
                                 spherical_modes = spherical_modes,
                                 include_chif=INCLUDE_CHIF,
@@ -92,6 +94,8 @@ def get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical
                                     bgp.kernel_GP, 
                                     t0=t0, 
                                     T=T, 
+                                    decay_corrected=True,
+                                    strain_parameters=True,
                                     num_samples=NUM_SAMPLES,
                                     spherical_modes = spherical_modes,
                                     include_chif=INCLUDE_CHIF,
@@ -145,7 +149,7 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, spherical
                     alpha = 1-0.1*n
                     color = base_color 
                     ls = '-'
-                    lw = 2.5-0.25*n
+                    lw = 2-0.25*n
                 elif len(mode) == 2:
                     p = 1
                     n = 0
@@ -178,13 +182,13 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, spherical
                                 color=color, alpha=alpha, lw=lw,
                                 label=label if run[0] == runs[0][0] else "",
                                 ls=ls)
-                        ax.fill_between(temp_t0_vals - 1, lowers, uppers, color=color, alpha=0.15, linewidth=0)
+                        ax.fill_between(temp_t0_vals - 1, lowers, uppers, color=color, alpha=0.4, linewidth=0)
                     else:
                         ax.plot([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [amps[0], amps[0]],
                                 color=color, alpha=alpha, lw=lw,
                                 label=label if run[0] == runs[0][0] else "",
                                 ls=ls)
-                        ax.fill_between([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [lowers[0], lowers[0]], [uppers[0], uppers[0]], color=color, alpha=0.15, linewidth=0)
+                        ax.fill_between([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [lowers[0], lowers[0]], [uppers[0], uppers[0]], color=color, alpha=0.4, linewidth=0)
 
             threshold_idx = next((i for i, p in enumerate(p_values) if p < 0.7), None)
             if threshold_idx is not None:
@@ -295,7 +299,8 @@ def get_epsilon(fits, fits_full, sim_id, mode_content_data_dict, Mf_ref, chif_re
 
 
 def __main__():
-    sim_ids = [f"{i:04}" for i in range(1, 14)]
+    #sim_ids = [f"{i:04}" for i in range(1, 14)]
+    sim_ids = ["0010"]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
@@ -306,7 +311,7 @@ def __main__():
         candidate_modes = [tuple(mode) for mode in mode_content_data_dict['candidate_modes']]
         full_modes_list = [list(map(tuple, inner_list)) for inner_list in mode_content_data_dict["modes"]]
 
-        corner_indices = np.searchsorted(t0_vals, [10, 20, 70])
+        corner_indices = np.searchsorted(t0_vals, [10, 20, 30])
 
         l_max = max(mode[0] for mode in candidate_modes if len(mode) == 4)
 
