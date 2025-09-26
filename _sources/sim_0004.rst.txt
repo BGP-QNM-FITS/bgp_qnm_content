@@ -42,14 +42,14 @@ Tuples of length 2 / 4 / 8 / 12 are constant terms / QNMs / quadratic QNMs / cub
 Mode Content
 ------------
 
-.. image:: figures/0004/mode_content/mode_content.png
-   :width: 600px
-   :alt: mode_content.png
-
 Additional Notes
 ----------------
 
 This simulation contains two instances of a retrograde mode present without a prograde mode, which are not shown on the mode content plot. These are the (3, 2, 4, -) mode at timestepst0 = 10.0 [M] and t0 = 12.0 [M].
+
+.. image:: figures/0004/mode_content/mode_content.png
+   :width: 600px
+   :alt: mode_content.png
 
 Amplitude Stability
 -------------------
@@ -58,28 +58,9 @@ Amplitude Stability
    :width: 600px
    :alt: amplitude_stability_22.png
 
-Additional Notes
-----------------
-
-This simulation contains two instances of a retrograde mode present without a prograde mode, which are not shown on the mode content plot. These are the (3, 2, 4, -) mode at timestepst0 = 10.0 [M] and t0 = 12.0 [M].
-
-.. image:: figures/0004/mode_content/amplitude_stability_32.png
+.. image:: figures/0004/amplitude_stability/amplitude_stability_32.png
    :width: 600px
    :alt: amplitude_stability_32.png
-
-Additional Notes
-----------------
-
-This simulation contains two instances of a retrograde mode present without a prograde mode, which are not shown on the mode content plot. These are the (3, 2, 4, -) mode at timestepst0 = 10.0 [M] and t0 = 12.0 [M].
-
-.. image:: figures/0004/mode_content/amplitude_stability_42.png
-   :width: 600px
-   :alt: amplitude_stability_42.png
-
-Additional Notes
-----------------
-
-This simulation contains two instances of a retrograde mode present without a prograde mode, which are not shown on the mode content plot. These are the (3, 2, 4, -) mode at timestepst0 = 10.0 [M] and t0 = 12.0 [M].
 
 Fits
 ----
@@ -88,26 +69,7 @@ Fits
    :width: 600px
    :alt: fits_22.png
 
-Additional Notes
-----------------
-
-This simulation contains two instances of a retrograde mode present without a prograde mode, which are not shown on the mode content plot. These are the (3, 2, 4, -) mode at timestepst0 = 10.0 [M] and t0 = 12.0 [M].
-
-.. image:: figures/0004/mode_content/fits_32.png
+.. image:: figures/0004/fits/fits_32.png
    :width: 600px
    :alt: fits_32.png
-
-Additional Notes
-----------------
-
-This simulation contains two instances of a retrograde mode present without a prograde mode, which are not shown on the mode content plot. These are the (3, 2, 4, -) mode at timestepst0 = 10.0 [M] and t0 = 12.0 [M].
-
-.. image:: figures/0004/mode_content/fits_42.png
-   :width: 600px
-   :alt: fits_42.png
-
-Additional Notes
-----------------
-
-This simulation contains two instances of a retrograde mode present without a prograde mode, which are not shown on the mode content plot. These are the (3, 2, 4, -) mode at timestepst0 = 10.0 [M] and t0 = 12.0 [M].
 

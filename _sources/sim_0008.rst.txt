@@ -57,29 +57,13 @@ Amplitude Stability
    :width: 600px
    :alt: amplitude_stability_22.png
 
-.. image:: figures/0008/amplitude_stability/amplitude_stability_3-2.png
-   :width: 600px
-   :alt: amplitude_stability_3-2.png
-
 .. image:: figures/0008/amplitude_stability/amplitude_stability_3-3.png
    :width: 600px
    :alt: amplitude_stability_3-3.png
 
-.. image:: figures/0008/amplitude_stability/amplitude_stability_32.png
-   :width: 600px
-   :alt: amplitude_stability_32.png
-
 .. image:: figures/0008/amplitude_stability/amplitude_stability_33.png
    :width: 600px
    :alt: amplitude_stability_33.png
-
-.. image:: figures/0008/amplitude_stability/amplitude_stability_4-3.png
-   :width: 600px
-   :alt: amplitude_stability_4-3.png
-
-.. image:: figures/0008/amplitude_stability/amplitude_stability_43.png
-   :width: 600px
-   :alt: amplitude_stability_43.png
 
 Fits
 ----
@@ -92,27 +76,11 @@ Fits
    :width: 600px
    :alt: fits_22.png
 
-.. image:: figures/0008/fits/fits_3-2.png
-   :width: 600px
-   :alt: fits_3-2.png
-
 .. image:: figures/0008/fits/fits_3-3.png
    :width: 600px
    :alt: fits_3-3.png
 
-.. image:: figures/0008/fits/fits_32.png
-   :width: 600px
-   :alt: fits_32.png
-
 .. image:: figures/0008/fits/fits_33.png
    :width: 600px
    :alt: fits_33.png
-
-.. image:: figures/0008/fits/fits_4-3.png
-   :width: 600px
-   :alt: fits_4-3.png
-
-.. image:: figures/0008/fits/fits_43.png
-   :width: 600px
-   :alt: fits_43.png
 
