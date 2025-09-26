@@ -12,7 +12,7 @@ config.apply_style()
 
 special_color_1 = to_hex("#C26C88")
 
-PVAL_THRESHOLD = 0.7 
+PVAL_THRESHOLD = 0.9
 
 SPH_MODE_RULES = {
     "0001": "PE",

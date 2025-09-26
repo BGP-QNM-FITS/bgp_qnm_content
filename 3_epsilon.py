@@ -20,7 +20,7 @@ DATA_TYPE = 'news'
 T = 100
 INCLUDE_CHIF = True
 INCLUDE_MF = True
-PVAL_THRESHOLD = 0.7 
+PVAL_THRESHOLD = 0.9
 
 NUM_SAMPLES = 1000
 
@@ -98,7 +98,7 @@ def get_epsilon_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, 
 
     fits, fits_full = get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical_modes)
 
-    fig = plt.figure(figsize=(config.fig_width, config.fig_height), dpi=300)
+    fig = plt.figure(figsize=(12, 8), dpi=300)
     gs = fig.add_gridspec(2, 3, height_ratios=[2, 1], width_ratios=[1, 1, 1])
 
     # Main plot
@@ -167,7 +167,7 @@ def get_epsilon_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, 
 
 def __main__():
     #sim_ids = [f"{i:04}" for i in range(1, 13)]
-    sim_ids = ["0010", "0001", "0002", "0005", "0003", "0004", "0006", "0007", "0008", "0009", "0011", "0012"]
+    sim_ids = ["0010"]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:

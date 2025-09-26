@@ -21,7 +21,7 @@ DATA_TYPE = 'news'
 T = 100
 INCLUDE_CHIF = True
 INCLUDE_MF = True
-PVAL_THRESHOLD = 0.7 
+PVAL_THRESHOLD = 0.9
 
 NUM_SAMPLES = 1000
 
@@ -213,7 +213,6 @@ def plot_residuals(sim_id, times, data, models, residuals, spherical_modes, plot
 
 def __main__():
     sim_ids = [f"{i:04}" for i in range(1, 13)]
-    #sim_ids = ["0013"]
     for sim_id in sim_ids:
 
         sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
@@ -260,9 +259,8 @@ def __main__():
             "ALL": (SPHERICAL_MODES_ALL, TARGET_MODES_ALL),
         }
 
-        #spherical_modes, plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
-
-        plot_residuals(sim_id, times, data, models, residuals, spherical_modes, spherical_modes, t0_choice)
+        spherical_modes, plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
+        plot_residuals(sim_id, times, data, models, residuals, spherical_modes, plotting_modes, t0_choice)
 
 if __name__ == "__main__":
     __main__()

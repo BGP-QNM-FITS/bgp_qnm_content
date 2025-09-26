@@ -57,7 +57,7 @@ SPH_MODE_RULES = {
     "0013": "ALL",
 }
 
-PVAL_THRESHOLD = 0.7
+PVAL_THRESHOLD = 0.9
 
 L_GROUPS = [2, 3, 4, 5, 6]
 custom_cmap = LinearSegmentedColormap.from_list("custom_colormap", config.colors)

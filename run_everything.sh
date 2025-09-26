@@ -14,7 +14,16 @@ echo "Generating website pages..."
 python automate_pages.py || echo "Error running automate_pages.py"
 
 echo "Building Sphinx HTML documentation..."
-cd docs
-sphinx-build -b html docs docs || echo "Error building Sphinx HTML documentation"
+sphinx-build -b html docs docs/_build/html || echo "Error building Sphinx HTML documentation"
+
+git checkout gh-pages
+
+cp -r docs/_build/html/* .
+
+git add .
+git commit -m "Updated website"
+git push 
+
+git checkout main 
 
 echo "All done!"

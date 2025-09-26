@@ -18,7 +18,7 @@ DATA_TYPE = 'news'
 T = 100
 INCLUDE_CHIF = False
 INCLUDE_MF = False
-PVAL_THRESHOLD = 0.7 
+PVAL_THRESHOLD = 0.9
 
 NUM_SAMPLES = 1000
 
@@ -54,6 +54,38 @@ nonlinear_linestyle = {
         (2,-2,0,-1,4,-4,0,-1): '-',
         (2,-2,0,-1,2,-2,0,-1,2,-2,0,-1): '-'
     }
+
+SPH_MODE_RULES = {
+    "0001": "PES",
+    "0002": "PES",
+    "0003": "PES",
+    "0004": "PES",
+    "0005": "PS",
+    "0006": "PS",
+    "0007": "PS",
+    "0008": "ALLS",
+    "0009": "ES",
+    "0010": "P",
+    "0011": "P",
+    "0012": "P",
+    "0013": "ALL",
+}
+
+TARGET_MODES_PES = [(2, 2), (3, 2)] 
+TARGET_MODES_PS = [(2, 2), (3, 3)]
+TARGET_MODES_ALLS = [(2, 2), (3, 3), (2, -2), (3, -3)]
+TARGET_MODES_ES = [(2, 2), (3, 2), (2, -2), (3, -2)]
+TARGET_MODES_P = [(2, 2), (3, 3), (4, 4), (5, 5), (6, 6)]
+TARGET_MODES_ALL = [(2, 2), (3, 3), (4, 4), (5, 5), (6, 6), (2, -2), (3, -3), (4, -4), (5, -5), (6, -6)]
+
+mode_rules_map = {
+            "PES": (TARGET_MODES_PES),
+            "PS": (TARGET_MODES_PS),
+            "ES": (TARGET_MODES_ES),
+            "ALLS": (TARGET_MODES_ALLS),
+            "P": (TARGET_MODES_P),
+            "ALL": (TARGET_MODES_ALL),
+        }
 
 def get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical_modes): 
     sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
@@ -105,7 +137,7 @@ def masks(mode, t0_vals, full_modes_list):
     return [np.arange(start, end) for start, end in zip(start_indices, end_indices)]
 
 
-def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, spherical_modes, t0_vals, l_max):
+def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, plotting_modes, t0_vals, l_max):
 
     full_modes_list = [list(map(tuple, inner_list)) for inner_list in mode_content_data_dict["modes"]]
     unique_modes = list(set(mode for modes in full_modes_list for mode in modes))
@@ -113,6 +145,9 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, spherical
 
     for l in range(2, l_max+1):
         for m in range(-l, l+1):
+
+            if (l, m) not in plotting_modes:
+                continue
 
             possible_modes_for_plot = [mode for mode in unique_modes if (len(mode) == 4 or len(mode) == 2) and mode[0] == l and mode[1] == m] + \
                         [mode for mode in unique_modes if len(mode) == 8 and (mode[0] + mode[4] == l) and (mode[1] + mode[5] == m)] + \
@@ -197,8 +232,7 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, spherical
 
 
 def __main__():
-    #sim_ids = [f"{i:04}" for i in range(1, 13)]
-    sim_ids = [f"{i:04}" for i in range(11, 13)]
+    sim_ids = [f"{i:04}" for i in range(1, 13)]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
@@ -213,8 +247,11 @@ def __main__():
 
         sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
 
-        fits = get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical_modes) 
-        get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, spherical_modes, t0_vals, l_max)
+        fits = get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical_modes)  
+
+        plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
+
+        get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, plotting_modes, t0_vals, l_max)
 
 if __name__ == "__main__":
     __main__()  
