@@ -21,6 +21,7 @@ DATA_TYPE = 'news'
 T = 100
 INCLUDE_CHIF = True
 INCLUDE_MF = True
+PVAL_THRESHOLD = 0.7 
 
 NUM_SAMPLES = 1000
 
@@ -97,7 +98,7 @@ def get_fits(sim_id, mode_content_data_dict, t0_vals, t0, full_modes_list, spher
                                 t0=t0, 
                                 T=T, 
                                 num_samples=NUM_SAMPLES,
-                                spherical_modes = spherical_modes,
+                                spherical_modes=spherical_modes,
                                 include_chif=INCLUDE_CHIF,
                                 include_Mf=INCLUDE_MF,
                                 data_type=DATA_TYPE)
@@ -122,7 +123,7 @@ def get_models_residuals(spherical_modes, masked_data_array, constant_term, ref_
         return residuals, models
 
 
-def plot_residuals(sim_id, times, data, models, residuals, spherical_modes, t0_choice):
+def plot_residuals(sim_id, times, data, models, residuals, spherical_modes, plotting_modes, t0_choice):
     """
     For each spherical mode, plot:
       - Top axis: data (over times), model median, shaded region for model spread
@@ -130,9 +131,11 @@ def plot_residuals(sim_id, times, data, models, residuals, spherical_modes, t0_c
     """
     n_modes = len(spherical_modes)
 
-    for i, mode in enumerate(spherical_modes):
+    for mode in plotting_modes:
         fig, (ax_data, ax_resid) = plt.subplots(2, 1, figsize=(config.fig_width, config.fig_height * 1.5), 
                                                 sharex=True, gridspec_kw={'height_ratios': [2, 1]})
+        
+        i = spherical_modes.index(mode)
 
         # Data shape: (n_modes, n_times)
         # Models/Residuals shape: (n_samples, n_modes, n_times)
@@ -162,19 +165,19 @@ def plot_residuals(sim_id, times, data, models, residuals, spherical_modes, t0_c
         p90_resid_imag = np.percentile(residuals_mode_imag, 90, axis=0)
 
         # Top axis: data and model
-        ax_data.plot(times, data_mode_real, color=l_to_color[2], alpha = 0.5, label='Data')
+        ax_data.plot(times, data_mode_real, color=special_color_1, alpha = 0.5, label='Data')
         ax_data.plot(times, data_mode_imag, color=special_color_2, alpha = 0.5)
 
         ax_data.plot(times, median_model, color='k', label='Model', linestyle='--')
         ax_data.plot(times, median_model_imag, color='k', linestyle=':')
 
-        ax_data.fill_between(times, p5_model, p90_model, color=l_to_color[mode[0]], alpha=0.3)
-        ax_data.fill_between(times, p5_model_imag, p90_model_imag, color=l_to_color[mode[0]], alpha=0.3)
+        ax_data.fill_between(times, p5_model, p90_model, color=special_color_1, alpha=0.3)
+        ax_data.fill_between(times, p5_model_imag, p90_model_imag, color=special_color_2, alpha=0.3)
 
         ax_data.set_title(fr"$\ell = {mode[0]}, m = {mode[1]}$ at $t_0 = {t0_choice} \, [M]$")
+        ax_data.set_yscale("log")
         ax_data.set_ylabel("Amplitude")
         ax_data.legend() 
-        ax_data.set_yscale("log")
 
         # Bottom axis: residuals
         ax_resid.plot(times, median_resid, color='k', label='Real', linestyle='--')
@@ -194,7 +197,7 @@ def plot_residuals(sim_id, times, data, models, residuals, spherical_modes, t0_c
         # Add legends for color and linestyle
 
         legend_elements = [
-            Line2D([0], [0], color=l_to_color[2], alpha=0.5, label='Data (Real)'),
+            Line2D([0], [0], color=special_color_1, alpha=0.5, label='Data (Real)'),
             Line2D([0], [0], color=special_color_2, alpha=0.5, label='Data (Imag)'),
             Line2D([0], [0], color='k', linestyle='--', label='Model (Real)'),
             Line2D([0], [0], color='k', linestyle=':', label='Model (Imag)'),
@@ -209,12 +212,11 @@ def plot_residuals(sim_id, times, data, models, residuals, spherical_modes, t0_c
         plt.close()
 
 def __main__():
-    sim_ids = [f"{i:04}" for i in range(1, 14)]
-    #sim_ids = ["0001"]
+    sim_ids = [f"{i:04}" for i in range(1, 13)]
+    #sim_ids = ["0013"]
     for sim_id in sim_ids:
 
         sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
-        Mf_ref, chif_ref = sim.Mf, sim.chif_mag
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
             mode_content_data_dict = json.load(f)
@@ -223,7 +225,7 @@ def __main__():
         spherical_modes = [tuple(mode) for mode in mode_content_data_dict['spherical_modes']]
 
         ppc_vals = mode_content_data_dict['p_values']
-        below_threshold_idx = next((i for i, val in enumerate(ppc_vals) if val < 0.7), None)
+        below_threshold_idx = next((i for i, val in enumerate(ppc_vals) if val < PVAL_THRESHOLD), None)
         full_modes_list = [list(map(tuple, inner_list)) for inner_list in mode_content_data_dict["modes"]]
 
         t0_choice = t0_vals[below_threshold_idx]
@@ -237,6 +239,7 @@ def __main__():
 
         times = fit.fit['analysis_times']    
         data = fit.fit['data_array_masked']
+
         residuals, models = get_models_residuals(
             spherical_modes, 
             data, 
@@ -257,9 +260,9 @@ def __main__():
             "ALL": (SPHERICAL_MODES_ALL, TARGET_MODES_ALL),
         }
 
-        spherical_modes, plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
+        #spherical_modes, plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
 
-        plot_residuals(sim_id, times, data, models, residuals, plotting_modes, t0_choice)
+        plot_residuals(sim_id, times, data, models, residuals, spherical_modes, spherical_modes, t0_choice)
 
 if __name__ == "__main__":
     __main__()

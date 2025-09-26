@@ -1,54 +1,116 @@
+import os
 import json
-import glob
 import re
+import bgp_qnm_fits as bgp 
+import numpy as np 
+from collections import defaultdict
 
-# Find all relevant JSON files
-json_files = glob.glob("mode_content_files/mode_content_data_*.json")
+input_dir = "0013_mode_content_files"
+output_file = "mode_content_files/mode_content_data_0013.json"
 
-compiled = {
-    "sim_id": None,
-    "times": [],
-    "spherical_modes": [],
-    "threshold": None,
-    "initial_modes": [],
-    "candidate_modes": [],
-    "include_chif": None,
-    "include_Mf": None,
-    "modes": [],
-    "p_values": [],
-    "run_time": 0.0,
-}
+# Prepare containers for each t0
+t0_data = defaultdict(list)
+metadata = {}
+metadata["spherical_modes"] = [] 
+metadata["initial_modes"] = []
+metadata["candidate_modes"] = []
+first_file = True
+done_m = set()
 
-for fname in json_files:
-    with open(fname, "r") as f:
+# Scan all files
+for fname in sorted(os.listdir(input_dir)):
+    match = re.match(r"mode_content_data_0013_(\d+)_(\d+\.?\d*)\.json", fname)
+    if not match:
+        continue
+    m = int(match.group(1))
+    t0 = float(match.group(2))
+    with open(os.path.join(input_dir, fname), "r") as f:
         data = json.load(f)
-    # Set shared metadata from the first file
-    if compiled["sim_id"] is None:
-        compiled["sim_id"] = data["sim_id"]
-        compiled["threshold"] = data["threshold"]
-        compiled["include_chif"] = data["include_chif"]
-        compiled["include_Mf"] = data["include_Mf"]
-    # Merge lists
-    compiled["spherical_modes"].extend(data["spherical_modes"])
-    compiled["initial_modes"].extend(data["initial_modes"])
-    compiled["candidate_modes"].extend(data["candidate_modes"])
-    # Extract t0 from filename (assuming pattern ..._{sim_id}_{m}_{t0}.json)
-    match = re.search(r'_(\d+)_(\d+)_(\d+\.?\d*)\.json$', fname)
-    if match:
-        t0 = float(match.group(3))
-        if t0 not in compiled["times"]:
-            compiled["times"].append(t0)
-    # Each file contains only one time step
-    compiled["modes"].extend(data["modes"])
-    compiled["p_values"].extend(data["p_values"])
-    compiled["run_time"] += data.get("run_time", 0.0)
+    # Save metadata from the first file
+    if first_file:
+        metadata["sim_id"] = "0013"
+        metadata["times"] = data["times"]
+        metadata["threshold"] = data["threshold"]
+        metadata["include_chif"] = data["include_chif"]
+        metadata["include_Mf"] = data["include_Mf"]
+        first_file = False
 
-# Remove duplicates and sort times
-compiled["spherical_modes"] = list({tuple(x) for x in compiled["spherical_modes"]})
-compiled["initial_modes"] = list({tuple(x) for x in compiled["initial_modes"]})
-compiled["candidate_modes"] = list({tuple(x) for x in compiled["candidate_modes"]})
-compiled["times"] = sorted(compiled["times"])
+    if m not in done_m:
+        metadata["spherical_modes"].extend(data["spherical_modes"])
+        metadata["initial_modes"].extend(data["initial_modes"])
+        metadata["candidate_modes"].extend(data["candidate_modes"])
+        done_m.add(m)
 
-# Save the compiled file
-with open(f"mode_content_files/mode_content_data_compiled_{compiled['sim_id']}.json", "w") as f:
-    json.dump(compiled, f)
+    t0_data[t0].extend(data["modes"][0])
+
+
+# Scan all negative m files 
+for fname in sorted(os.listdir(input_dir)):
+    match = re.match(r"mode_content_data_0013_m(\d+)_(\d+\.?\d*)\.json", fname)
+    if not match:
+        continue
+    m = -int(match.group(1))
+    t0 = float(match.group(2))
+    with open(os.path.join(input_dir, fname), "r") as f:
+        data = json.load(f)
+    # Save metadata from the first file
+    if first_file:
+        metadata["sim_id"] = "0013"
+        metadata["times"] = data["times"]
+        metadata["threshold"] = data["threshold"]
+        metadata["include_chif"] = data["include_chif"]
+        metadata["include_Mf"] = data["include_Mf"]
+        first_file = False
+
+    if m not in done_m:
+        metadata["spherical_modes"].extend(data["spherical_modes"])
+        metadata["initial_modes"].extend(data["initial_modes"])
+        metadata["candidate_modes"].extend(data["candidate_modes"])
+        done_m.add(m)
+
+    t0_data[t0].extend(data["modes"][0])
+
+# Build output lists
+compiled_modes = []
+for t0 in metadata["times"]:
+    modes_at_t0 = t0_data.get(t0, [])
+    compiled_modes.append(modes_at_t0)
+
+metadata["modes"] = compiled_modes
+
+sim = bgp.SXS_CCE("0013", type="news", lev="Lev5", radius="R2")
+tuned_param_dict_GP = bgp.get_tuned_param_dict("GP", data_type="news")["0013"]
+
+p_values_median = []
+
+full_modes_list = [list(map(tuple, inner_list)) for inner_list in metadata["modes"]]
+spherical_modes = [tuple(mode) for mode in metadata["spherical_modes"]]
+
+for i, t0 in enumerate(metadata["times"]): 
+
+    print(f'Fitting from {t0=}')
+
+    select_modes = full_modes_list[i]
+
+    fit = bgp.BGP_fit(sim.times, 
+                        sim.h, 
+                        select_modes, 
+                        sim.Mf, 
+                        sim.chif_mag, 
+                        tuned_param_dict_GP, 
+                        bgp.kernel_GP, 
+                        t0=t0, 
+                        T=100, 
+                        spherical_modes=spherical_modes,
+                        include_chif=False,
+                        include_Mf=False,
+                        data_type="news")
+
+    p_values_median.append(np.median(fit.fit["p_values"]))
+
+metadata["p_values"] = p_values_median
+
+with open(output_file, "w") as f:
+    json.dump(metadata, f)
+
+print(f"Compiled file written to {output_file}")

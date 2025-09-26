@@ -122,7 +122,7 @@ for sim_folder in sorted(os.listdir(figures_dir)):
             f.write(f"    {str(candidate_modes)}\n\n")
 
             # Find all subfolders
-            subfolder_order = ["mode_content", "fits"]
+            subfolder_order = ["mode_content", "amplitude_stability", "fits", "epsilon"]
             for subfolder in subfolder_order:
                 subfolder_path = os.path.join(sim_path, subfolder)
                 if os.path.isdir(subfolder_path):
@@ -132,3 +132,19 @@ for sim_folder in sorted(os.listdir(figures_dir)):
                         if file.endswith(('.png', '.jpg', '.jpeg', '.pdf')):
                             rel_path = os.path.relpath(os.path.join(subfolder_path, file), rst_dir)
                             f.write(f".. image:: {rel_path}\n   :width: 600px\n   :alt: {file}\n\n")
+
+                            # Add specific text for certain sim_ids under 'mode_content'
+                            if sim_id in ["0004", "0009"]:
+                                subfolder_path = os.path.join(sim_path, "mode_content")
+                                if os.path.isdir(subfolder_path):
+                                    f.write("Additional Notes\n----------------\n\n")
+                                    if sim_id == "0004":
+                                        f.write("This simulation contains two instances of a retrograde mode present without a prograde mode, "
+                                                "which are not shown on the mode content plot. These are the (3, 2, 4, -) mode at timesteps"
+                                                "t0 = 10.0 [M] and t0 = 12.0 [M]."
+                                                "\n\n")
+                                    elif sim_id == "0009":
+                                        f.write("This simulation contains four instances of a retrograde mode present without a prograde mode, "
+                                                "which are not shown on the mode content plot. These are the (2, 2, 6, -) mode at timestep"
+                                                "t0 = 18.0 [M], and the (3, 2, 6, -) mode at timesteps t0 = 18.0 [M], t0 = 20.0 [M], and t0 = 28.0 [M]."
+                                                "\n\n")

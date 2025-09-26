@@ -12,6 +12,8 @@ config.apply_style()
 
 special_color_1 = to_hex("#C26C88")
 
+PVAL_THRESHOLD = 0.7 
+
 SPH_MODE_RULES = {
     "0001": "PE",
     "0002": "PE",
@@ -61,135 +63,6 @@ nonlinear_modes = {
     (2,-2,0,-1,4,-4,0,-1): r'$(2,-2,0,-) \times (4,-4,0,-)$',
     (2,-2,0,-1,2,-2,0,-1,2,-2,0,-1): r'$(2,-2,0,-)^3$'
 }
-
-def group_sort_key(item):
-        group = item[0]
-        if group == ('QQNM',):
-            return (0,)  
-        elif group == ('CQNM',):
-            return (1,)  
-        else:
-            return (2, -group[0], -group[1])
-
-def plot_mode_content_testing(sim_id, mode_content_data_dict, t0_vals, spherical_modes):
-
-    full_modes_list = [list(map(tuple, inner_list)) for inner_list in mode_content_data_dict["modes"]]
-    p_values = mode_content_data_dict["p_values"]
-    threshold = 0.99  # Define the threshold value
-
-    # Create figure
-    fig, ax = plt.subplots(figsize=(config.fig_width_2, config.fig_height_2), dpi=300)
-
-    below_threshold_indices = next((i for i, p in enumerate(p_values) if p < threshold), None)
-    t0_below_threshold = t0_vals[below_threshold_indices]
-
-    ax.axvspan(
-        0, 
-        t0_below_threshold, 
-        color='grey', 
-        alpha=0.1, 
-        zorder=0
-    )
-
-    lm_groups = {}
-    for modes_at_t0 in full_modes_list:
-        for mode in modes_at_t0:
-            if len(mode) == 4:
-                l, m, n, p = mode
-                if (l, m) in spherical_modes:
-                    lm_groups.setdefault((l, m), set()).add((n, mode))
-            elif len(mode) == 8:
-                lm_groups.setdefault(('QQNM',), set()).add((0, mode))
-            elif len(mode) == 12:
-                lm_groups.setdefault(('CQNM',), set()).add((0, mode))
-    
-    for group in lm_groups:
-        lm_groups[group] = sorted(list(lm_groups[group]), reverse=True)
-
-    sorted_groups = sorted(lm_groups.items(), key=group_sort_key)
-    
-    colors = LinearSegmentedColormap.from_list("custom_colormap", config.colors)(
-        np.linspace(0, 1, len(lm_groups))
-    ) 
-    
-    dt = np.median(np.diff(t0_vals)) 
-    
-    # Position variables
-    y_pos = 0
-    y_ticks = []
-    y_labels = []
-    y_positions = {}
-    bar_height = 0.2
-    
-    for (group, modes) in sorted_groups:
-        group_start = y_pos
-        
-        # Assign positions for all modes in this group
-        for n, mode in modes:
-            y_positions[mode] = y_pos
-            y_pos += 0.3
-        
-        # Add group label
-        y_ticks.append((group_start + y_pos - 0.3) / 2)
-        y_labels.append('QQNM' if group == ('QQNM',) else 
-                       'CQNM' if group == ('CQNM',) else 
-                       f"({group[0]},{group[1]})")
-        
-        y_pos += 0.6  # Space between groups
-    
-    # Plot for each t0
-    for t_idx, (t0, modes_at_t0) in enumerate(zip(t0_vals, full_modes_list)):
-        width = (t0_vals[t_idx + 1] - t0) if t_idx < len(t0_vals) - 1 else dt
-        
-        for mode in modes_at_t0:
-            if mode in y_positions:
-                y = y_positions[mode]
-                
-                if len(mode) == 4:
-                    l, m, n, _ = mode
-                    color_idx = [g[0] for g in sorted_groups].index((l, m))
-                    color = colors[color_idx]
-                    alpha = 1.0 - 0.1 * n
-                elif len(mode) == 8:
-                    color, alpha = special_color_1, 1.0
-                elif len(mode) == 12:
-                    color, alpha = special_color_1, 1.0
-                
-                # Draw rectangle
-                ax.broken_barh(
-                    [(t0 - width/2, width)],
-                    (y - bar_height/2, bar_height),
-                    facecolors=color,
-                    alpha=alpha,
-                    edgecolor='none'
-                )
-    
-    x_label_pos = t0_vals[-1] + dt/2
-    
-    for mode, y in y_positions.items():
-        label = mode 
-            
-        ax.text(
-            x_label_pos, 
-            y, 
-            label, 
-            fontsize=3, 
-            va='center',
-            ha='left'
-        )
-    
-    ax.set_xlabel(r"$t_0 [M]$")
-    ax.set_ylabel(r"Mode content")
-    ax.set_xlim(t0_vals[0], t0_vals[-1] + dt*1.5)
-    ax.set_ylim(-0.5, y_pos - 0.5)
-    
-    ax.set_yticks(y_ticks)
-    ax.set_yticklabels(y_labels, fontsize=8)
-    
-    plt.tight_layout()
-    plt.savefig(f"figures/{sim_id}/mode_content/1_mode_content_{sim_id}.png", bbox_inches="tight")
-    plt.close()
-
 
 def classify_mode(mode):
     """Classify a mode as QNM, QQNM, CQNM, or other."""
@@ -443,7 +316,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
             )
 
     # Show threshold region
-    threshold_idx = next((i for i, p in enumerate(p_values) if p < 0.7), None)
+    threshold_idx = next((i for i, p in enumerate(p_values) if p < PVAL_THRESHOLD), None)
     if threshold_idx is not None:
         ax.axvspan(0, t0_vals[threshold_idx], color='grey', alpha=0.2, zorder=0)
 
@@ -455,7 +328,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
     ax.xaxis.set_minor_locator(FixedLocator(np.arange(t0_vals[0], t0_vals[-1] + dt, 5)))
     
     plt.tight_layout()
-    outdir = f"docs/figures/{sim_id}"
+    outdir = f"paper_figures"
     os.makedirs(outdir, exist_ok=True)
     plt.savefig(f"{outdir}/mode_content_{sim_id}.pdf", bbox_inches="tight")
     plt.close()
@@ -483,7 +356,6 @@ def __main__():
         plotting_modes = [(2,2), (3,3), (4,4), (5,5), (6,6)]
 
         plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes, modes_to_plot=plotting_modes)
-        #plot_mode_content_testing(sim_id, mode_content_data_dict, t0_vals, spherical_modes)
 
 if __name__ == "__main__":
     __main__()

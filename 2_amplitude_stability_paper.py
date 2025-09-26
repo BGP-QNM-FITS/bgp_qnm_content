@@ -16,6 +16,7 @@ DATA_TYPE = 'news'
 T = 100
 INCLUDE_CHIF = False
 INCLUDE_MF = False
+PVAL_THRESHOLD = 0.7 
 
 L_GROUPS = [2, 3, 4, 5, 6]
 custom_cmap = LinearSegmentedColormap.from_list("custom_colormap", config.colors)
@@ -54,21 +55,6 @@ def get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical
     full_modes_list = [list(map(tuple, inner_list)) for inner_list in mode_content_data_dict["modes"]]
 
     fits = [] 
-
-    #fits_full = bgp.BGP_fit(sim.times, 
-    #                        sim.h, 
-    #                        list(set(initial_modes + candidate_modes)), 
-    #                        sim.Mf, 
-    #                        sim.chif_mag, 
-    #                        tuned_param_dict_GP, 
-    #                        bgp.kernel_GP, 
-    #                        t0=t0_vals, 
-    #                        T=T, 
-    #                        decay_corrected=True,
-    #                        spherical_modes = spherical_modes,
-    #                        include_chif=INCLUDE_CHIF,
-    #                        include_Mf=INCLUDE_MF,
-    #                        data_type=DATA_TYPE)
 
     for i, t0 in enumerate(t0_vals): 
 
@@ -178,7 +164,7 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, spherical_modes
                             ls=ls)
                     ax.fill_between([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [lowers[0], lowers[0]], [uppers[0], uppers[0]], color=color, alpha=0.4, linewidth=0)
 
-        threshold_idx = next((i for i, p in enumerate(p_values) if p < 0.7), None)
+        threshold_idx = next((i for i, p in enumerate(p_values) if p < PVAL_THRESHOLD), None)
         if threshold_idx is not None:
             ax.axvspan(0, t0_vals[threshold_idx], color='grey', alpha=0.2, zorder=0)
 
@@ -191,11 +177,10 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, spherical_modes
     axes[0].set_ylabel(r"$|\hat{C}_{\alpha}|$")
     plt.subplots_adjust(wspace=0.05) 
     plt.tight_layout()
-    plt.savefig(f"docs/figures/{sim_id}/amplitude_stability/amplitude_stability_{sim_id}.pdf", bbox_inches="tight")
+    plt.savefig(f"paper_figures/amplitude_stability_{sim_id}.pdf", bbox_inches="tight")
     plt.close()
 
 def __main__():
-    #sim_ids = [f"{i:04}" for i in range(1, 14)]
     sim_ids = ["0010"] 
     for sim_id in sim_ids:
 
@@ -204,11 +189,9 @@ def __main__():
 
         t0_vals = np.array(mode_content_data_dict['times'])
         spherical_modes = [tuple(mode) for mode in mode_content_data_dict['spherical_modes']]
-        initial_modes = [tuple(mode) for mode in mode_content_data_dict['initial_modes']]
         candidate_modes = [tuple(mode) for mode in mode_content_data_dict['candidate_modes']]
 
         l_max = max(mode[0] for mode in candidate_modes if len(mode) == 4)
-        n_max = max(mode[2] for mode in candidate_modes if len(mode) == 4)
 
         get_amplitude_stability_plot(sim_id, mode_content_data_dict, spherical_modes, t0_vals, l_max)
 

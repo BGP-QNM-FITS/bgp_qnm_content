@@ -57,6 +57,8 @@ SPH_MODE_RULES = {
     "0013": "ALL",
 }
 
+PVAL_THRESHOLD = 0.7
+
 L_GROUPS = [2, 3, 4, 5, 6]
 custom_cmap = LinearSegmentedColormap.from_list("custom_colormap", config.colors)
 l_to_color = {
@@ -77,14 +79,6 @@ nonlinear_modes = {
     (2,-2,0,-1,2,-2,0,-1,2,-2,0,-1): r'$(2,-2,0,-)^3$'
 }
 
-def group_sort_key(item):
-        group = item[0]
-        if group == ('QQNM',):
-            return (0,)  
-        elif group == ('CQNM',):
-            return (1,)  
-        else:
-            return (2, -group[0], -group[1])
 
 def classify_mode(mode):
     """Classify a mode as QNM, QQNM, CQNM, or other."""
@@ -331,8 +325,8 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
                 ha='center'
             )
 
-    # Show threshold region
-    threshold_idx = next((i for i, p in enumerate(p_values) if p < 0.7), None)
+    #Show threshold region
+    threshold_idx = next((i for i, p in enumerate(p_values) if p < PVAL_THRESHOLD), None)
     if threshold_idx is not None:
         ax.axvspan(0, t0_vals[threshold_idx], color='grey', alpha=0.2, zorder=0)
 
@@ -351,8 +345,8 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
 
 
 def __main__():
-    sim_ids = [f"{i:04}" for i in range(1, 14)]
-    #sim_ids = ["0009"]
+    sim_ids = [f"{i:04}" for i in range(1, 13)]
+    #sim_ids = ["0013"]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:

@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap, to_hex
@@ -19,6 +20,7 @@ DATA_TYPE = 'news'
 T = 100
 INCLUDE_CHIF = True
 INCLUDE_MF = True
+PVAL_THRESHOLD = 0.7 
 
 NUM_SAMPLES = 1000
 
@@ -71,7 +73,7 @@ def get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical
     return fits, fits_full
 
 
-def get_amplitude_stability_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, spherical_modes, indices):
+def get_epsilon_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, spherical_modes, indices):
     """
     Generate the amplitude stability plot and add contour plots for specified indices using seaborn kdeplot.
 
@@ -96,14 +98,14 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, Mf_ref, chif_re
 
     fits, fits_full = get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical_modes)
 
-    fig = plt.figure(figsize=(12, 8))
+    fig = plt.figure(figsize=(config.fig_width, config.fig_height), dpi=300)
     gs = fig.add_gridspec(2, 3, height_ratios=[2, 1], width_ratios=[1, 1, 1])
 
     # Main plot
     ax_main = fig.add_subplot(gs[0, :])
 
     p_values = mode_content_data_dict["p_values"]
-    threshold_idx = next((i for i, p in enumerate(p_values) if p < 0.7), None)
+    threshold_idx = next((i for i, p in enumerate(p_values) if p < PVAL_THRESHOLD), None)
     if threshold_idx is not None:
         ax_main.axvspan(0, t0_vals[threshold_idx], color='grey', alpha=0.5, zorder=0)
 
@@ -157,12 +159,15 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, Mf_ref, chif_re
         ax.set_title(f"$t_0 = {t0_vals[i]}$")
 
     plt.tight_layout()
-    plt.savefig(f"figures/{sim_id}/epsilon.png", bbox_inches="tight")
+    outdir = f"docs/figures/{sim_id}/epsilon"
+    os.makedirs(outdir, exist_ok=True)
+    plt.savefig(f"{outdir}/epsilon.png", bbox_inches="tight")
     plt.close(fig)
 
+
 def __main__():
-    sim_ids = [f"{i:04}" for i in range(1, 14)]
-    #sim_ids = ["0001"]
+    #sim_ids = [f"{i:04}" for i in range(1, 13)]
+    sim_ids = ["0010", "0001", "0002", "0005", "0003", "0004", "0006", "0007", "0008", "0009", "0011", "0012"]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
@@ -171,16 +176,12 @@ def __main__():
         t0_vals = np.array(mode_content_data_dict['times'])
         spherical_modes = [tuple(mode) for mode in mode_content_data_dict['spherical_modes']]
 
-        t0_vals_new = np.arange(t0_vals[0], t0_vals[-1] + 1, 5) # TODO to speed things up 
-        indices = np.searchsorted(t0_vals, t0_vals_new)
-        mode_content_data_dict["modes"] = [mode_content_data_dict["modes"][i] for i in indices]
-        mode_content_data_dict["p_values"] = [mode_content_data_dict["p_values"][i] for i in indices]
-
-        corner_indices = np.searchsorted(t0_vals_new, [10, 20, 70])
+        corner_indices = np.searchsorted(t0_vals, [10, 30, 50])
 
         sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
         Mf_ref, chif_ref = sim.Mf, sim.chif_mag
-        get_amplitude_stability_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals_new, spherical_modes, indices=corner_indices)
+
+        get_epsilon_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, spherical_modes, indices=corner_indices)
 
 if __name__ == "__main__":
     __main__()
