@@ -1,0 +1,29 @@
+.. qnm_content_site documentation master file, created by
+   sphinx-quickstart on Wed Sep 24 10:07:08 2025.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+QNM Content Site
+============================================
+
+This website contains links (on the left) to the mode content and amplitude stabilities of various target 
+modes at a range of start times from each of the 13 simulations in the SXS CCE catalog. 
+Each page also contains fits, residuals, and a comparison of the mass and spin posteriors to 
+models which do not dynamically remove QNMs at each t0. 
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Simulations
+   :hidden:
+
+   sim_0001
+   sim_0002
+   sim_0003
+   sim_0004
+   sim_0005
+   sim_0006
+   sim_0007
+   sim_0008
+   sim_0009
+   sim_0010
+   sim_0011
