@@ -1,7 +1,0 @@
-Mode Content for Simulation 0011
-========================================
-
-.. image:: figures/0011/mode_content/mode_content.png
-   :width: 900px
-   :alt: mode_content.png
-
