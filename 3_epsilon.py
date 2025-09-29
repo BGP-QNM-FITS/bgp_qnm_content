@@ -167,7 +167,7 @@ def get_epsilon_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, 
 
 def __main__():
     #sim_ids = [f"{i:04}" for i in range(1, 13)]
-    sim_ids = ["0010"]
+    sim_ids = ["0013"]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:

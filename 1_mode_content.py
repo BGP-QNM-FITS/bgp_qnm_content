@@ -202,13 +202,13 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
                         l, m, n, _ = mode
                         alpha = 1.0
                         hatch = '....'
-                        mode_color = base_color
+                        mode_color = l_to_color.get(l, "#888888") 
                         pos = key_positions.get((l, m, n, np.sign(m)*1))
 
         # Process all modes (QNM, QQNM, CQNM) in the same loop
         for group, modes in sorted_groups:
             ell, _ = group
-            base_color = color = l_to_color.get(ell, "#888888") 
+            base_color = l_to_color.get(ell, "#888888") 
 
             for n, mode in modes:
                 if mode not in modes_set:
@@ -345,8 +345,8 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
 
 
 def __main__():
-    sim_ids = [f"{i:04}" for i in range(1, 13)]
-    #sim_ids = ["0013"]
+    #sim_ids = [f"{i:04}" for i in range(1, 13)]
+    sim_ids = ["0013"]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:

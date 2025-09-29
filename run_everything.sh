@@ -16,9 +16,11 @@ python automate_pages.py || echo "Error running automate_pages.py"
 echo "Building Sphinx HTML documentation..."
 sphinx-build -b html docs docs/_build/html || echo "Error building Sphinx HTML documentation"
 
+cp -r docs/_build/html /tmp/html_build
+
 git checkout gh-pages
 
-cp -r docs/_build/html/* .
+cp -r /tmp/html_build/* .
 
 git add .
 git commit -m "Updated website"

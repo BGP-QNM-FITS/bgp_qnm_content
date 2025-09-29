@@ -28,3 +28,4 @@ models which do not dynamically remove QNMs at each t0.
    sim_0010
    sim_0011
    sim_0012
+   sim_0013

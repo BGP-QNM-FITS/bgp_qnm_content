@@ -143,8 +143,17 @@ for sim_folder in sorted(os.listdir(figures_dir)):
                                     "which are not shown on the mode content plot. These are the (2, 2, 6, -) mode at timestep"
                                     "t0 = 18.0 [M], and the (3, 2, 6, -) mode at timesteps t0 = 18.0 [M], t0 = 20.0 [M], and t0 = 28.0 [M]."
                                     "\n\n")
+                            
+                        elif sim_id == "0013":
+
+                            f.write("Additional Notes\n----------------\n\n")
+                            f.write("This simulation contains multiple instances of a retrograde mode present without a prograde mode, "
+                                    "which, in this exceptional case, have been shown on a separate plot as dotted regions. Furthermore, "
+                                    "this is the only simulation found to contain a constant offset, which is shown in pink on the plots."
+                                    "\n\n")
 
                     for file in sorted(os.listdir(subfolder_path)):
                         if file.endswith(('.png', '.jpg', '.jpeg', '.pdf')):
                             rel_path = os.path.relpath(os.path.join(subfolder_path, file), rst_dir)
                             f.write(f".. image:: {rel_path}\n   :width: 600px\n   :alt: {file}\n\n")
+
