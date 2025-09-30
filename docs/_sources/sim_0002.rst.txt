@@ -57,10 +57,6 @@ Amplitude Stability
    :width: 600px
    :alt: amplitude_stability_32.png
 
-.. image:: figures/0002/amplitude_stability/amplitude_stability_42.png
-   :width: 600px
-   :alt: amplitude_stability_42.png
-
 Fits
 ----
 
@@ -71,8 +67,4 @@ Fits
 .. image:: figures/0002/fits/fits_32.png
    :width: 600px
    :alt: fits_32.png
-
-.. image:: figures/0002/fits/fits_42.png
-   :width: 600px
-   :alt: fits_42.png
 

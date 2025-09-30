@@ -7,9 +7,15 @@ QNM Content Site
 ============================================
 
 This website contains links (on the left) to the mode content and amplitude stabilities of various target 
-modes at a range of start times from each of the 13 simulations in the SXS CCE catalog. 
+modes at a range of start times for each of the 13 publicly available Cauchy characteristic evolved (CCE) 
+NR simulations provided by SXS (see `Moxon+ 2020 for more details on CCE <https://arxiv.org/abs/2007.01339>`_). 
+
+The simulations can be accessed `here <https://data.black-holes.org/waveforms/extcce_catalog.html>`_. 
+
 Each page also contains fits, residuals, and a comparison of the mass and spin posteriors to 
 models which do not dynamically remove QNMs at each t0. 
+
+The code used to produce the analyses and figures on this website is available `here <https://github.com/BGP-QNM-FITS/bgp_qnm_content>`_. 
 
 .. toctree::
    :maxdepth: 2

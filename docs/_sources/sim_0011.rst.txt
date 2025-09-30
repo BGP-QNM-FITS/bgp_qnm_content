@@ -49,245 +49,25 @@ Mode Content
 Amplitude Stability
 -------------------
 
-.. image:: figures/0011/amplitude_stability/amplitude_stability_2-1.png
-   :width: 600px
-   :alt: amplitude_stability_2-1.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_2-2.png
-   :width: 600px
-   :alt: amplitude_stability_2-2.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_20.png
-   :width: 600px
-   :alt: amplitude_stability_20.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_21.png
-   :width: 600px
-   :alt: amplitude_stability_21.png
-
 .. image:: figures/0011/amplitude_stability/amplitude_stability_22.png
    :width: 600px
    :alt: amplitude_stability_22.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_3-1.png
-   :width: 600px
-   :alt: amplitude_stability_3-1.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_3-2.png
-   :width: 600px
-   :alt: amplitude_stability_3-2.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_3-3.png
-   :width: 600px
-   :alt: amplitude_stability_3-3.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_30.png
-   :width: 600px
-   :alt: amplitude_stability_30.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_31.png
-   :width: 600px
-   :alt: amplitude_stability_31.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_32.png
-   :width: 600px
-   :alt: amplitude_stability_32.png
 
 .. image:: figures/0011/amplitude_stability/amplitude_stability_33.png
    :width: 600px
    :alt: amplitude_stability_33.png
 
-.. image:: figures/0011/amplitude_stability/amplitude_stability_4-1.png
-   :width: 600px
-   :alt: amplitude_stability_4-1.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_4-2.png
-   :width: 600px
-   :alt: amplitude_stability_4-2.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_4-3.png
-   :width: 600px
-   :alt: amplitude_stability_4-3.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_4-4.png
-   :width: 600px
-   :alt: amplitude_stability_4-4.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_40.png
-   :width: 600px
-   :alt: amplitude_stability_40.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_41.png
-   :width: 600px
-   :alt: amplitude_stability_41.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_42.png
-   :width: 600px
-   :alt: amplitude_stability_42.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_43.png
-   :width: 600px
-   :alt: amplitude_stability_43.png
-
 .. image:: figures/0011/amplitude_stability/amplitude_stability_44.png
    :width: 600px
    :alt: amplitude_stability_44.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_5-1.png
-   :width: 600px
-   :alt: amplitude_stability_5-1.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_5-2.png
-   :width: 600px
-   :alt: amplitude_stability_5-2.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_5-3.png
-   :width: 600px
-   :alt: amplitude_stability_5-3.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_5-4.png
-   :width: 600px
-   :alt: amplitude_stability_5-4.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_5-5.png
-   :width: 600px
-   :alt: amplitude_stability_5-5.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_50.png
-   :width: 600px
-   :alt: amplitude_stability_50.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_51.png
-   :width: 600px
-   :alt: amplitude_stability_51.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_52.png
-   :width: 600px
-   :alt: amplitude_stability_52.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_53.png
-   :width: 600px
-   :alt: amplitude_stability_53.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_54.png
-   :width: 600px
-   :alt: amplitude_stability_54.png
 
 .. image:: figures/0011/amplitude_stability/amplitude_stability_55.png
    :width: 600px
    :alt: amplitude_stability_55.png
 
-.. image:: figures/0011/amplitude_stability/amplitude_stability_6-1.png
-   :width: 600px
-   :alt: amplitude_stability_6-1.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_6-2.png
-   :width: 600px
-   :alt: amplitude_stability_6-2.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_6-3.png
-   :width: 600px
-   :alt: amplitude_stability_6-3.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_6-4.png
-   :width: 600px
-   :alt: amplitude_stability_6-4.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_6-5.png
-   :width: 600px
-   :alt: amplitude_stability_6-5.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_6-6.png
-   :width: 600px
-   :alt: amplitude_stability_6-6.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_60.png
-   :width: 600px
-   :alt: amplitude_stability_60.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_61.png
-   :width: 600px
-   :alt: amplitude_stability_61.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_62.png
-   :width: 600px
-   :alt: amplitude_stability_62.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_63.png
-   :width: 600px
-   :alt: amplitude_stability_63.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_64.png
-   :width: 600px
-   :alt: amplitude_stability_64.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_65.png
-   :width: 600px
-   :alt: amplitude_stability_65.png
-
 .. image:: figures/0011/amplitude_stability/amplitude_stability_66.png
    :width: 600px
    :alt: amplitude_stability_66.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_7-1.png
-   :width: 600px
-   :alt: amplitude_stability_7-1.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_7-2.png
-   :width: 600px
-   :alt: amplitude_stability_7-2.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_7-3.png
-   :width: 600px
-   :alt: amplitude_stability_7-3.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_7-4.png
-   :width: 600px
-   :alt: amplitude_stability_7-4.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_7-5.png
-   :width: 600px
-   :alt: amplitude_stability_7-5.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_7-6.png
-   :width: 600px
-   :alt: amplitude_stability_7-6.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_7-7.png
-   :width: 600px
-   :alt: amplitude_stability_7-7.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_70.png
-   :width: 600px
-   :alt: amplitude_stability_70.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_71.png
-   :width: 600px
-   :alt: amplitude_stability_71.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_72.png
-   :width: 600px
-   :alt: amplitude_stability_72.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_73.png
-   :width: 600px
-   :alt: amplitude_stability_73.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_74.png
-   :width: 600px
-   :alt: amplitude_stability_74.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_75.png
-   :width: 600px
-   :alt: amplitude_stability_75.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_76.png
-   :width: 600px
-   :alt: amplitude_stability_76.png
-
-.. image:: figures/0011/amplitude_stability/amplitude_stability_77.png
-   :width: 600px
-   :alt: amplitude_stability_77.png
 
 Fits
 ----
@@ -296,39 +76,19 @@ Fits
    :width: 600px
    :alt: fits_22.png
 
-.. image:: figures/0011/fits/fits_32.png
-   :width: 600px
-   :alt: fits_32.png
-
 .. image:: figures/0011/fits/fits_33.png
    :width: 600px
    :alt: fits_33.png
-
-.. image:: figures/0011/fits/fits_43.png
-   :width: 600px
-   :alt: fits_43.png
 
 .. image:: figures/0011/fits/fits_44.png
    :width: 600px
    :alt: fits_44.png
 
-.. image:: figures/0011/fits/fits_54.png
-   :width: 600px
-   :alt: fits_54.png
-
 .. image:: figures/0011/fits/fits_55.png
    :width: 600px
    :alt: fits_55.png
 
-.. image:: figures/0011/fits/fits_65.png
-   :width: 600px
-   :alt: fits_65.png
-
 .. image:: figures/0011/fits/fits_66.png
    :width: 600px
    :alt: fits_66.png
-
-.. image:: figures/0011/fits/fits_76.png
-   :width: 600px
-   :alt: fits_76.png
 
