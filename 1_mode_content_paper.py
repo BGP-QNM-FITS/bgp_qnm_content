@@ -315,10 +315,12 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
                 ha='center'
             )
 
-    # Show threshold region
-    threshold_idx = next((i for i, p in enumerate(p_values) if p < PVAL_THRESHOLD), None)
+    threshold_idx = next((i for i in reversed(range(len(p_values))) if p_values[i] > PVAL_THRESHOLD), None)
     if threshold_idx is not None:
-        ax.axvspan(0, t0_vals[threshold_idx], color='grey', alpha=0.2, zorder=0)
+        threshold_idx += 1
+        ax.axvspan(0, t0_vals[threshold_idx] - np.median(np.diff(t0_vals))/2, color='grey', alpha=0.2, zorder=0)
+    else:
+        print(f"No threshold index found for simulation {sim_id}.")
 
     ax.set_xlabel(r"Start time $t_0 \, [M]$")
     ax.set_xlim(t0_vals[0], t0_vals[-1])

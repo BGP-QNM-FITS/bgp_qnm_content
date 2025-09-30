@@ -164,15 +164,18 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, spherical_modes
                             ls=ls)
                     ax.fill_between([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [lowers[0], lowers[0]], [uppers[0], uppers[0]], color=color, alpha=0.4, linewidth=0)
 
-        threshold_idx = next((i for i, p in enumerate(p_values) if p < PVAL_THRESHOLD), None)
+        threshold_idx = next((i for i in reversed(range(len(p_values))) if p_values[i] > PVAL_THRESHOLD), None)
         if threshold_idx is not None:
-            ax.axvspan(0, t0_vals[threshold_idx], color='grey', alpha=0.2, zorder=0)
+            threshold_idx += 1
+            ax.axvspan(0, t0_vals[threshold_idx] - np.median(np.diff(t0_vals))/2, color='grey', alpha=0.2, zorder=0)
+        else:
+            print(f"No threshold index found for simulation {sim_id}.")
 
         ax.set_xlim([t0_vals[0], t0_vals[-1]])
         ax.set_xlabel(r"Start time $t_0 \, [M]$")
         ax.set_title(fr"$\ell = m = {m}$")
         ax.set_yscale('log')
-        ax.legend(loc='upper right', frameon=False, fontsize=4.5)
+        ax.legend(loc='upper right', frameon=False, fontsize=4.5, handlelength=3)
 
     axes[0].set_ylabel(r"$|\hat{C}_{\alpha}|$")
     plt.subplots_adjust(wspace=0.05) 

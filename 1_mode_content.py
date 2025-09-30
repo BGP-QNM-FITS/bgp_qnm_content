@@ -325,10 +325,12 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
                 ha='center'
             )
 
-    #Show threshold region
-    threshold_idx = next((i for i, p in enumerate(p_values) if p < PVAL_THRESHOLD), None)
+    threshold_idx = next((i for i in reversed(range(len(p_values))) if p_values[i] > PVAL_THRESHOLD), None)
     if threshold_idx is not None:
-        ax.axvspan(0, t0_vals[threshold_idx], color='grey', alpha=0.2, zorder=0)
+        threshold_idx += 1
+        ax.axvspan(0, t0_vals[threshold_idx] - np.median(np.diff(t0_vals))/2, color='grey', alpha=0.2, zorder=0)
+    else:
+        print(f"No threshold index found for simulation {sim_id}.")
 
     ax.set_xlabel(r"Start time $t_0 \, [M]$")
     ax.set_xlim(t0_vals[0], t0_vals[-1])
@@ -346,7 +348,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
 
 def __main__():
     #sim_ids = [f"{i:04}" for i in range(1, 13)]
-    sim_ids = ["0010"]
+    sim_ids = ["0305"]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
@@ -364,9 +366,9 @@ def __main__():
             "ALL": (SPHERICAL_MODES_ALL, TARGET_MODES_ALL),
         }
 
-        spherical_modes, plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
+        #spherical_modes, plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
 
-        plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes, modes_to_plot=plotting_modes)
+        plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes, modes_to_plot=spherical_modes)
 
 if __name__ == "__main__":
     __main__()
