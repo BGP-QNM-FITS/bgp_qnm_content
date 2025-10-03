@@ -137,7 +137,7 @@ def __main__():
                                      
             spherical_modes = SPHERICAL_MODES_ALL
 
-        for m in np.arange(2, L_MAX):
+        for m in [4, -4, 5, -5, 6, -6]:
             
             spherical_modes_m = [s for s in spherical_modes if s[1] == m]
 

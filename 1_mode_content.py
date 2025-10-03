@@ -342,16 +342,16 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
     plt.tight_layout()
     outdir = f"docs/figures/{sim_id}/mode_content"
     os.makedirs(outdir, exist_ok=True)
-    plt.savefig(f"{outdir}/mode_content.png", bbox_inches="tight")
+    plt.savefig(f"{outdir}/mode_content_WN.png", bbox_inches="tight")
     plt.close()
 
 
 def __main__():
     #sim_ids = [f"{i:04}" for i in range(1, 13)]
-    sim_ids = ["0305"]
+    sim_ids = ["0010"]
     for sim_id in sim_ids:
 
-        with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
+        with open(f'mode_content_files/mode_content_data_{sim_id}_WN.json', 'r') as f:
             mode_content_data_dict = json.load(f)
 
         t0_vals = np.array(mode_content_data_dict['times'])
@@ -366,9 +366,9 @@ def __main__():
             "ALL": (SPHERICAL_MODES_ALL, TARGET_MODES_ALL),
         }
 
-        #spherical_modes, plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
+        spherical_modes, plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
 
-        plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes, modes_to_plot=spherical_modes)
+        plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spherical_modes, modes_to_plot=plotting_modes)
 
 if __name__ == "__main__":
     __main__()

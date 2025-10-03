@@ -7,6 +7,7 @@ from plot_config import PlotConfig
 import json
 import bgp_qnm_fits as bgp
 import seaborn as sns
+from matplotlib.lines import Line2D
 
 # Configuration
 config = PlotConfig()
@@ -72,37 +73,9 @@ def get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical
     
     return fits, fits_full
 
-
-def get_epsilon_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, spherical_modes, indices):
-    """
-    Generate the amplitude stability plot and add contour plots for specified indices using seaborn kdeplot.
-
-    Parameters:
-    -----------
-    sim_id : str
-        Simulation ID.
-    mode_content_data_dict : dict
-        Mode content data.
-    Mf_ref, chif_ref : float
-        Reference values for Mf and chif.
-    t0_vals : array
-        Array of t0 values.
-    spherical_modes : list
-        List of spherical modes.
-    indices : list of int
-        Indices of t0 values for which to generate contour plots.
-    """
-
-    full_modes_list = [list(map(tuple, inner_list)) for inner_list in mode_content_data_dict["modes"]]
-    colors = LinearSegmentedColormap.from_list("custom_colormap2", config.colors)(np.linspace(0, 1, 3))
-
-    fits, fits_full = get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical_modes)
-
-    fig = plt.figure(figsize=(12, 8), dpi=300)
-    gs = fig.add_gridspec(2, 3, height_ratios=[2, 1], width_ratios=[1, 1, 1])
-
-    # Main plot
-    ax_main = fig.add_subplot(gs[0, :])
+def plot_epsilon_main(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, fits, fits_full):
+    colors = LinearSegmentedColormap.from_list("custom_colormap2", config.colors2)(np.linspace(0, 1, 3))
+    fig, ax_main = plt.subplots(figsize=(config.fig_width, config.fig_height), dpi=300)
 
     p_values = mode_content_data_dict["p_values"]
     threshold_idx = next((i for i, p in enumerate(p_values) if p < PVAL_THRESHOLD), None)
@@ -111,14 +84,12 @@ def get_epsilon_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, 
 
     epsilons_adaptive = np.zeros((len(t0_vals), NUM_SAMPLES))
     epsilons_full = np.zeros((len(t0_vals), NUM_SAMPLES))
-    epsilons_full_pos = np.zeros((len(t0_vals), NUM_SAMPLES))
 
     for i, t0 in enumerate(t0_vals):
         Mf_adaptive, chif_adaptive = fits[i].fit["samples"][:, -1], fits[i].fit["samples"][:, -2]
         Mf_full, chif_full = fits_full.fits[i]["samples"][:, -1], fits_full.fits[i]["samples"][:, -2]
         epsilon_adaptive = np.sqrt((Mf_ref - Mf_adaptive)**2 / Mf_ref**2 + (chif_ref - chif_adaptive)**2 / chif_ref**2)
         epsilon_full = np.sqrt((Mf_ref - Mf_full)**2 / Mf_ref**2 + (chif_ref - chif_full)**2 / chif_ref**2)
-
         epsilons_adaptive[i, :] = epsilon_adaptive
         epsilons_full[i, :] = epsilon_full
 
@@ -135,53 +106,61 @@ def get_epsilon_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, 
     ax_main.fill_between(t0_vals, p16_full, p84_full, color=colors[1], alpha=0.3)
 
     ax_main.legend(frameon=False, loc="upper right", fontsize=8)
-
     ax_main.set_xlim([t0_vals[0], t0_vals[-1]])
     ax_main.set_xlabel(r"$t_0$ [M]")
     ax_main.set_ylabel(r"$\epsilon$")
     ax_main.set_yscale("log")
 
-    # Contour plots for specified indices
-    for idx, i in enumerate(indices):
-        ax = fig.add_subplot(gs[1, idx])
-
-        Mf_adaptive, chif_adaptive = fits[i].fit["samples"][:, -1], fits[i].fit["samples"][:, -2]
-        Mf_full, chif_full = fits_full.fits[i]["samples"][:, -1], fits_full.fits[i]["samples"][:, -2]
-
-        sns.kdeplot(x=Mf_adaptive, y=chif_adaptive, ax=ax, color=colors[0], fill=False, levels=5, linewidths=2, label="Adaptive model")
-        sns.kdeplot(x=Mf_full, y=chif_full, ax=ax, color=colors[1], fill=False, levels=5, linewidths=2, label="All modes")
-
-        ax.scatter(Mf_ref, chif_ref, color='red', marker='*', s=120, label="True $(M_f, \chi_f)$", zorder=10)
-
-        ax.set_xlabel("$M_f$")
-        if idx == 0:
-            ax.set_ylabel("$\chi_f$")
-        ax.set_title(f"$t_0 = {t0_vals[i]}$")
-
-    plt.tight_layout()
     outdir = f"docs/figures/{sim_id}/epsilon"
     os.makedirs(outdir, exist_ok=True)
+    plt.tight_layout()
     plt.savefig(f"{outdir}/epsilon.png", bbox_inches="tight")
     plt.close(fig)
 
+def plot_epsilon_corners(sim_id, Mf_ref, chif_ref, t0_vals, fits, fits_full):
+    colors = LinearSegmentedColormap.from_list("custom_colormap2", config.colors2)(np.linspace(0, 1, 3))
+    outdir = f"docs/figures/{sim_id}/epsilon"
+    os.makedirs(outdir, exist_ok=True)
+    for idx in range(0, len(t0_vals), 5):  # Loop through every fifth t0 value
+        fig, ax = plt.subplots(figsize=(config.fig_width, config.fig_width), dpi=300)
+        Mf_adaptive, chif_adaptive = fits[idx].fit["samples"][:, -1], fits[idx].fit["samples"][:, -2]
+        Mf_full, chif_full = fits_full.fits[idx]["samples"][:, -1], fits_full.fits[idx]["samples"][:, -2]
+        sns.kdeplot(
+            x=Mf_adaptive, y=chif_adaptive, ax=ax,
+            color=colors[0], fill=False, levels=[0.5, 0.9], linewidths=2
+        )
+        sns.kdeplot(
+            x=Mf_full, y=chif_full, ax=ax,
+            color=colors[1], fill=False, levels=[0.5, 0.9], linewidths=2
+        )
+        ax.scatter(Mf_ref, chif_ref, color='red', marker='*', s=120, zorder=10)
+        ax.set_xlabel("$M_f$")
+        ax.set_ylabel("$\chi_f$")
+        ax.set_title(f"$t_0 = {t0_vals[idx]}$")
+        handles = [
+            Line2D([0], [0], color=colors[0], lw=2, ls='-', label="Adaptive model"),
+            Line2D([0], [0], color=colors[1], lw=2, ls='-', label="All modes"),
+        ]
+        labels = ["Adaptive model", "All modes"]
+        ax.legend(handles, labels, frameon=False, loc="upper right", fontsize=8)
+        plt.tight_layout()
+        plt.savefig(f"{outdir}/posterior_{t0_vals[idx]:.1f}.png", bbox_inches="tight")
+        plt.close(fig)
 
 def __main__():
-    #sim_ids = [f"{i:04}" for i in range(1, 13)]
-    sim_ids = ["0013"]
+    #sim_ids = [f"{i:04}" for i in range(1, 14)]
+    sim_ids = ["0010", "0011", "0012", "0013"]
     for sim_id in sim_ids:
-
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
             mode_content_data_dict = json.load(f)
-
         t0_vals = np.array(mode_content_data_dict['times'])
         spherical_modes = [tuple(mode) for mode in mode_content_data_dict['spherical_modes']]
-
-        corner_indices = np.searchsorted(t0_vals, [10, 30, 50])
-
         sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
         Mf_ref, chif_ref = sim.Mf, sim.chif_mag
-
-        get_epsilon_plot(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, spherical_modes, indices=corner_indices)
+        full_modes_list = [list(map(tuple, inner_list)) for inner_list in mode_content_data_dict["modes"]]
+        fits, fits_full = get_fits(sim_id, mode_content_data_dict, t0_vals, full_modes_list, spherical_modes)
+        plot_epsilon_main(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals, fits, fits_full)
+        plot_epsilon_corners(sim_id, Mf_ref, chif_ref, t0_vals, fits, fits_full)
 
 if __name__ == "__main__":
     __main__()
