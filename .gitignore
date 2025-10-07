@@ -5,8 +5,11 @@ __pycache__/
 # Ignore Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Ignore development folder
+# Ignore folders
 dev/
+0013_mode_content_files/
+0013_mode_content_files_2/
+0305/
 
 # Ignore system files
 .DS_Store

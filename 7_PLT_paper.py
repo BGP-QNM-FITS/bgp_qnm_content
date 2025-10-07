@@ -65,11 +65,11 @@ for PLT_mode in target_sph_modes:
         t0=t0,
         PLT_modes=PLT_modes,
         lam_PLT_val = lams,
-        A_PLT_prior = (0, 0.1),
+        A_PLT_prior = (-0.1, 0.1),
         t_PLT_prior = (t0-100, t0-10),
         lam_PLT_prior = (1, 14),
-        nsteps=3000,
-        nwalkers=20,
+        nsteps=5000,
+        nwalkers=50,
         T=T,
         spherical_modes=fit_sph_modes,
         include_chif=INCLUDE_CHIF,
@@ -91,7 +91,7 @@ for PLT_mode in target_sph_modes:
         plt.tight_layout()
         outdir = f"docs/figures/{sim_id}/PLTs"
         os.makedirs(outdir, exist_ok=True)
-        plt.savefig(f"{outdir}/PLT_trace_{i}_{PLT_modes[0]}.png", bbox_inches="tight")
+        plt.savefig(f"{outdir}/PLT_trace_{i}_{PLT_modes[0][0]}{PLT_modes[0][1]}.png", bbox_inches="tight")
         plt.close()
 
     autocorrelation_time = fit.sampler.get_autocorr_time(tol=10)
@@ -100,15 +100,17 @@ for PLT_mode in target_sph_modes:
     flat_samples = fit.sampler.get_chain(discard=burn_in, flat=True)  
     corner.corner(flat_samples, labels=param_names)
     plt.tight_layout()
-    plt.savefig(f"{outdir}/PLT_corner_{PLT_modes[0]}.png", bbox_inches="tight")
+    plt.savefig(f"{outdir}/PLT_corner_{PLT_modes[0][0]}{PLT_modes[0][1]}.png", bbox_inches="tight")
     plt.close()
 
     dists = np.sqrt(flat_samples[:,0]**2 + flat_samples[:,1]**2)
     percentile_90 = np.percentile(dists, 90)
 
     plt.hist(dists, bins=30, density=True, alpha=0.5, color='b')
+    plt.xlabel(r'$\sqrt{(\mathfrak{Re}A^{\beta})^2 + (\mathfrak{Im}A^{\beta})^2}$')
+    plt.ylabel('Density')
     plt.tight_layout()
-    plt.savefig(f"{outdir}/PLT_histogram_{PLT_modes[0]}.png", bbox_inches="tight")
+    plt.savefig(f"{outdir}/PLT_histogram_{PLT_modes[0][0]}{PLT_modes[0][1]}.png", bbox_inches="tight")
     plt.close()
 
     print(f"Results for PLT mode {PLT_modes[0]}:")
