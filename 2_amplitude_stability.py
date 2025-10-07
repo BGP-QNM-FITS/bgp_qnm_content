@@ -213,7 +213,7 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, plotting_
                         ax.fill_between([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [lowers[0], lowers[0]], [uppers[0], uppers[0]], color=color, alpha=0.4, linewidth=0)
 
             threshold_idx = next((i for i in reversed(range(len(p_values))) if p_values[i] > PVAL_THRESHOLD), None)
-            if threshold_idx is not None:
+            if threshold_idx is not None and threshold_idx + 1 < len(t0_vals):
                 threshold_idx += 1
                 ax.axvspan(0, t0_vals[threshold_idx] - np.median(np.diff(t0_vals))/2, color='grey', alpha=0.2, zorder=0)
             else:
@@ -235,8 +235,8 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, plotting_
 
 
 def __main__():
-    sim_ids = [f"{i:04}" for i in range(1, 13)]
-    #sim_ids = ["0013"]
+    #sim_ids = [f"{i:04}" for i in range(1, 13)]
+    sim_ids = ["0013"]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:

@@ -164,7 +164,7 @@ def __main__():
         end_time = time.time()
         mode_selection_data[f"run_time"] = end_time - start_time
 
-        with open(f'{FILENAME}_{sim_id}.json', 'w') as f:
+        with open(f'{FILENAME}_{sim_id}_B2.json', 'w') as f:
             json.dump(mode_selection_data, f)
 
 if __name__ == "__main__":

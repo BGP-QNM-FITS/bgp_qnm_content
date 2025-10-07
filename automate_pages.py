@@ -59,6 +59,35 @@ sim_metatdata = {
     "0013": (4, "q4_precessing", (0.487, 0.125, -0.327), (-0.190, 0.051, -0.227)),
 }
 
+descriptions = {
+    "mode_content": (
+        "The start times at which particular QNMs are present in the simulation are shown below. "
+        "Solid lines indicate prograde modes present, ordered by overtone number. "
+        "Hatched lines indicate that the retrograde mode is also present. "
+        "Grey shaded regions indicate the times at which the model is considered a poor fit. If there is "
+        "no grey region, the model is considered a good fit at all times shown."
+    ),
+    "amplitude_stability": (
+        "The decay-corrected amplitudes are shown below at a range of start times. "
+        "With the median as a bold line, and 90% region shaded."
+        "Grey shaded regions indicate the times at which the model is considered a poor fit. If there is "
+        "no grey region, the model is considered a good fit at all times shown."
+    ),
+    "fits": (
+        "Fits of the model and data are shown below, including residuals. "
+        "The start time of the fits is the earliest time step at which the model is considered a good fit."
+    ),
+    "epsilon_selection": (
+        "Using the model determined by the algorithm, the mass and spin of the remnant black hole are estimated, "
+        "and compared to the values obtained from a fit containing all possible modes. The root square distance from the "
+        "NR values is shown below. Also shown are a selection of posteriors at different start times."
+    ),
+    "PLT_selection": (
+        "A PLT search was performed at t_0 = 50 M. The resulting corner plots for the amplitude, and start time of the PLT mode"
+        "are shown below for the model described in the Supplmental Material of the paper."
+    ),
+}
+
 
 for sim_folder in sorted(os.listdir(figures_dir)):
     sim_path = os.path.join(figures_dir, sim_folder)
@@ -124,12 +153,15 @@ for sim_folder in sorted(os.listdir(figures_dir)):
 
             # Find all subfolders
             subfolder_order = ["mode_content", "amplitude_stability", "fits", "epsilon"]
+            if sim_id == "0010":
+                subfolder_order = ["mode_content", "amplitude_stability", "fits", "epsilon", "PLT"]
             for subfolder in subfolder_order:
                 subfolder_path = os.path.join(sim_path, subfolder)
                 if os.path.isdir(subfolder_path):
                     heading = prettify_heading(subfolder)
                     f.write(f"{heading}\n{'-'*len(heading)}\n\n")
-
+                    if subfolder in descriptions:
+                        f.write(descriptions[subfolder] + "\n\n")
                     if subfolder == "mode_content":
                         if sim_id == "0004":
                             f.write("Additional Notes\n----------------\n\n")

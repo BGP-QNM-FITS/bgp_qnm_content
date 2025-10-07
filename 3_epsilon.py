@@ -77,10 +77,14 @@ def plot_epsilon_main(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals,
     colors = LinearSegmentedColormap.from_list("custom_colormap2", config.colors2)(np.linspace(0, 1, 3))
     fig, ax_main = plt.subplots(figsize=(config.fig_width, config.fig_height), dpi=300)
 
-    p_values = mode_content_data_dict["p_values"]
-    threshold_idx = next((i for i, p in enumerate(p_values) if p < PVAL_THRESHOLD), None)
-    if threshold_idx is not None:
-        ax_main.axvspan(0, t0_vals[threshold_idx], color='grey', alpha=0.5, zorder=0)
+    p_values = mode_content_data_dict['p_values']
+
+    threshold_idx = next((i for i in reversed(range(len(p_values))) if p_values[i] > PVAL_THRESHOLD), None)
+    if threshold_idx is not None and threshold_idx + 1 < len(t0_vals):
+        threshold_idx += 1
+        ax_main.axvspan(0, t0_vals[threshold_idx] - np.median(np.diff(t0_vals))/2, color='grey', alpha=0.2, zorder=0)
+    else:
+        print(f"No threshold index found for simulation {sim_id}.")
 
     epsilons_adaptive = np.zeros((len(t0_vals), NUM_SAMPLES))
     epsilons_full = np.zeros((len(t0_vals), NUM_SAMPLES))
@@ -149,7 +153,7 @@ def plot_epsilon_corners(sim_id, Mf_ref, chif_ref, t0_vals, fits, fits_full):
 
 def __main__():
     #sim_ids = [f"{i:04}" for i in range(1, 14)]
-    sim_ids = ["0010", "0011", "0012", "0013"]
+    sim_ids = ["0012"]
     for sim_id in sim_ids:
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
             mode_content_data_dict = json.load(f)

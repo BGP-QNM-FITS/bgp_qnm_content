@@ -226,6 +226,8 @@ def __main__():
 
         ppc_vals = mode_content_data_dict['p_values']
         below_threshold_idx = next((i for i, val in enumerate(ppc_vals) if val < PVAL_THRESHOLD), None)
+        if below_threshold_idx is None or below_threshold_idx >= len(t0_vals):
+            below_threshold_idx = len(t0_vals) // 2
         full_modes_list = [list(map(tuple, inner_list)) for inner_list in mode_content_data_dict["modes"]]
 
         t0_choice = t0_vals[below_threshold_idx]

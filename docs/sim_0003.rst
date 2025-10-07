@@ -42,12 +42,16 @@ Tuples of length 2 / 4 / 8 / 12 are constant terms / QNMs / quadratic QNMs / cub
 Mode Content
 ------------
 
+The start times at which particular QNMs are present in the simulation are shown below. Solid lines indicate prograde modes present, ordered by overtone number. Hatched lines indicate that the retrograde mode is also present. Grey shaded regions indicate the times at which the model is considered a poor fit. If there is no grey region, the model is considered a good fit at all times shown.
+
 .. image:: figures/0003/mode_content/mode_content.png
    :width: 600px
    :alt: mode_content.png
 
 Amplitude Stability
 -------------------
+
+The decay-corrected amplitudes are shown below at a range of start times. With the median as a bold line, and 90% region shaded.Grey shaded regions indicate the times at which the model is considered a poor fit. If there is no grey region, the model is considered a good fit at all times shown.
 
 .. image:: figures/0003/amplitude_stability/amplitude_stability_22.png
    :width: 600px
@@ -60,6 +64,8 @@ Amplitude Stability
 Fits
 ----
 
+Fits of the model and data are shown below, including residuals. The start time of the fits is the earliest time step at which the model is considered a good fit.
+
 .. image:: figures/0003/fits/fits_22.png
    :width: 600px
    :alt: fits_22.png
@@ -67,4 +73,23 @@ Fits
 .. image:: figures/0003/fits/fits_32.png
    :width: 600px
    :alt: fits_32.png
+
+Epsilon
+-------
+
+.. image:: figures/0003/epsilon/epsilon.png
+   :width: 600px
+   :alt: epsilon.png
+
+.. image:: figures/0003/epsilon/posterior_10.0.png
+   :width: 600px
+   :alt: posterior_10.0.png
+
+.. image:: figures/0003/epsilon/posterior_30.0.png
+   :width: 600px
+   :alt: posterior_30.0.png
+
+.. image:: figures/0003/epsilon/posterior_50.0.png
+   :width: 600px
+   :alt: posterior_50.0.png
 

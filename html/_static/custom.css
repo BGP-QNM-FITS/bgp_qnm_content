@@ -1,0 +1,5 @@
+@import url('https://fonts.fontlibrary.org/css?font=computer-modern');
+
+body, html, .theme-container, #app, .content, .sidebar-links {
+    font-family: 'Computer Modern Serif', serif !important;
+}
