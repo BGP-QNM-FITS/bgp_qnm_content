@@ -47,6 +47,8 @@ The start times at which particular QNMs are present in the simulation are shown
 Additional Notes
 ----------------
 
+**For this highly precessing system, we have found that QNM fits, and our algorithm, produce unreliable results. Therefore while we include the results from this simulation for completeness, we caution the reader against drawing any conclusions from them.**
+
 This simulation contains multiple instances of a retrograde mode present without a prograde mode, which, in this exceptional case, have been shown on a separate plot as dotted regions. Furthermore, this is the only simulation found to contain a constant offset, which is shown in pink on the plots.
 
 .. image:: figures/0013/mode_content/mode_content.png
@@ -60,7 +62,7 @@ This simulation contains multiple instances of a retrograde mode present without
 Amplitude Stability
 -------------------
 
-The decay-corrected amplitudes are shown below at a range of start times. With the median as a bold line, and 90% region as shading around the line. Grey shaded regions indicate the times at which the model is considered a poor fit. If there is no grey region, the model is considered a good fit at all times shown.
+The decay-corrected amplitudes are shown below at a range of start times. With the median as a bold line, and 90\% region as shading around the line. Grey shaded regions indicate the times at which the model is considered a poor fit. If there is no grey region, the model is considered a good fit at all times shown.
 
 .. image:: figures/0013/amplitude_stability/amplitude_stability_2-2.png
    :width: 600px
@@ -102,40 +104,48 @@ The decay-corrected amplitudes are shown below at a range of start times. With t
    :width: 600px
    :alt: amplitude_stability_66.png
 
-Epsilon
--------
+Fits
+----
 
-Using the model determined by the algorithm, the mass and spin of the remnant black hole are estimated, and compared to the values obtained from a fit containing all possible modes. The root square distance from the NR values is shown below. Also shown are a selection of posteriors at different start times.
+Fits of the model and data are shown below, including residuals. The start time of the fits is the earliest time step at which the model is considered a good fit.
 
-.. image:: figures/0013/epsilon/epsilon.png
+.. image:: figures/0013/fits/fits_2-2.png
    :width: 600px
-   :alt: epsilon.png
+   :alt: fits_2-2.png
 
-.. image:: figures/0013/epsilon/posterior_0.0.png
+.. image:: figures/0013/fits/fits_22.png
    :width: 600px
-   :alt: posterior_0.0.png
+   :alt: fits_22.png
 
-.. image:: figures/0013/epsilon/posterior_10.0.png
+.. image:: figures/0013/fits/fits_3-3.png
    :width: 600px
-   :alt: posterior_10.0.png
+   :alt: fits_3-3.png
 
-.. image:: figures/0013/epsilon/posterior_20.0.png
+.. image:: figures/0013/fits/fits_33.png
    :width: 600px
-   :alt: posterior_20.0.png
+   :alt: fits_33.png
 
-.. image:: figures/0013/epsilon/posterior_30.0.png
+.. image:: figures/0013/fits/fits_4-4.png
    :width: 600px
-   :alt: posterior_30.0.png
+   :alt: fits_4-4.png
 
-.. image:: figures/0013/epsilon/posterior_40.0.png
+.. image:: figures/0013/fits/fits_44.png
    :width: 600px
-   :alt: posterior_40.0.png
+   :alt: fits_44.png
 
-.. image:: figures/0013/epsilon/posterior_50.0.png
+.. image:: figures/0013/fits/fits_5-5.png
    :width: 600px
-   :alt: posterior_50.0.png
+   :alt: fits_5-5.png
 
-.. image:: figures/0013/epsilon/posterior_60.0.png
+.. image:: figures/0013/fits/fits_55.png
    :width: 600px
-   :alt: posterior_60.0.png
+   :alt: fits_55.png
+
+.. image:: figures/0013/fits/fits_6-6.png
+   :width: 600px
+   :alt: fits_6-6.png
+
+.. image:: figures/0013/fits/fits_66.png
+   :width: 600px
+   :alt: fits_66.png
 

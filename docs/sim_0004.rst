@@ -56,7 +56,7 @@ This simulation contains two instances of a retrograde mode present without a pr
 Amplitude Stability
 -------------------
 
-The decay-corrected amplitudes are shown below at a range of start times. With the median as a bold line, and 90% region as shading around the line. Grey shaded regions indicate the times at which the model is considered a poor fit. If there is no grey region, the model is considered a good fit at all times shown.
+The decay-corrected amplitudes are shown below at a range of start times. With the median as a bold line, and 90\% region as shading around the line. Grey shaded regions indicate the times at which the model is considered a poor fit. If there is no grey region, the model is considered a good fit at all times shown.
 
 .. image:: figures/0004/amplitude_stability/amplitude_stability_22.png
    :width: 600px

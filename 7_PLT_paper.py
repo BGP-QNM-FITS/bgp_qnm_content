@@ -44,59 +44,59 @@ modes = full_modes_list[t0_idx]
 param_names = [r"$\mathfrak{Re}A^{\beta}$", r"$\mathfrak{Im}A^{\beta}$", r"$t_{\beta}$"]
 
 results = {} 
-
+"""
 results = {
-      "(2,2)": {
-            "autocorrelation_times": [17.24593489, 19.75596196, 62.74109633],
-            "percentile_90": 1.639791355225988e-05,
-            "n_iid_samples": 1394,
-            "n_steps": NSTEPS,
-            "n_walkers": NWALKERS,
-            "A_PLT_prior": A_PLT_PRIOR,
-            "T_PLT_prior": T_PLT_PRIOR,
-            "lam_PLT_prior": LAM_PLT_PRIOR
-      },
-      "(3,3)": {
-            "autocorrelation_times": [14.97008348, 12.86091514, 53.58425786],
-            "percentile_90": 1.2035153614096133e-05,
-            "n_iid_samples": 1632,
-            "n_steps": NSTEPS,
-            "n_walkers": NWALKERS,
-            "A_PLT_prior": A_PLT_PRIOR,
-            "T_PLT_prior": T_PLT_PRIOR,
-            "lam_PLT_prior": LAM_PLT_PRIOR
-      },
-      "(4,4)": {
-            "autocorrelation_times": [14.18369853, 13.84920344, 45.70641062],
-            "percentile_90": 7.735402931452636e-06,
-            "n_iid_samples": 1914,
-            "n_steps": NSTEPS,
-            "n_walkers": NWALKERS,
-            "A_PLT_prior": A_PLT_PRIOR,
-            "T_PLT_prior": T_PLT_PRIOR,
-            "lam_PLT_prior": LAM_PLT_PRIOR
-      },
-      "(5,5)": {
-            "autocorrelation_times": [12.22357828, 14.22925906, 51.8574474],
-            "percentile_90": 5.415274857745418e-06,
-            "n_iid_samples": 1687,
-            "n_steps": NSTEPS,
-            "n_walkers": NWALKERS,
-            "A_PLT_prior": A_PLT_PRIOR,
-            "T_PLT_prior": T_PLT_PRIOR,
-            "lam_PLT_prior": LAM_PLT_PRIOR
-      },
-      "(6,6)": {
-            "autocorrelation_times": [12.94084326, 11.65149118, 45.5239344],
-            "percentile_90": 3.623374132951909e-06,
-            "n_iid_samples": 1922,
-            "n_steps": NSTEPS,
-            "n_walkers": NWALKERS,
-            "A_PLT_prior": A_PLT_PRIOR,
-            "T_PLT_prior": T_PLT_PRIOR,
-            "lam_PLT_prior": LAM_PLT_PRIOR
-      }
-}
+    "(2,2)": {
+        "autocorrelation_times": [17.24593489, 19.75596196, 62.74109633],
+        "percentile_90": 1.639791355225988e-05,
+        "n_iid_samples": 1394,
+        "n_steps": NSTEPS,
+        "n_walkers": NWALKERS,
+        "A_PLT_prior": A_PLT_PRIOR,
+        "T_PLT_prior": T_PLT_PRIOR,
+        "lam_PLT_prior": LAM_PLT_PRIOR
+    },
+    "(3,3)": {
+        "autocorrelation_times": [14.97008348, 12.86091514, 53.58425786],
+        "percentile_90": 1.2035153614096133e-05,
+        "n_iid_samples": 1632,
+        "n_steps": NSTEPS,
+        "n_walkers": NWALKERS,
+        "A_PLT_prior": A_PLT_PRIOR,
+        "T_PLT_prior": T_PLT_PRIOR,
+        "lam_PLT_prior": LAM_PLT_PRIOR
+    },
+    "(4,4)": {
+        "autocorrelation_times": [14.278680017202916, 12.420955180429354, 44.55137426504399],
+        "percentile_90": 7.727752799320936e-06,
+        "n_iid_samples": 1964,
+        "n_steps": NSTEPS,
+        "n_walkers": NWALKERS,
+        "A_PLT_prior": A_PLT_PRIOR,
+        "T_PLT_prior": T_PLT_PRIOR,
+        "lam_PLT_prior": LAM_PLT_PRIOR
+    },
+    "(5,5)": {
+        "autocorrelation_times": [12.455410459708979, 13.26282730867459, 45.977192999239186],
+        "percentile_90": 5.4403694427219824e-06,
+        "n_iid_samples": 1903,
+        "n_steps": NSTEPS,
+        "n_walkers": NWALKERS,
+        "A_PLT_prior": A_PLT_PRIOR,
+        "T_PLT_prior": T_PLT_PRIOR,
+        "lam_PLT_prior": LAM_PLT_PRIOR
+    },
+    "(6,6)": {
+        "autocorrelation_times": [14.142204701818358, 13.891951718629679, 45.698126784368846],
+        "percentile_90": 3.6689456485527035e-06,
+        "n_iid_samples": 1914,
+        "n_steps": NSTEPS,
+        "n_walkers": NWALKERS,
+        "A_PLT_prior": A_PLT_PRIOR,
+        "T_PLT_prior": T_PLT_PRIOR,
+        "lam_PLT_prior": LAM_PLT_PRIOR
+    }
+}"""
 
 for PLT_mode in target_sph_modes:
 

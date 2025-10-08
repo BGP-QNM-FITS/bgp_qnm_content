@@ -67,9 +67,16 @@ descriptions = {
         "Grey shaded regions indicate the times at which the model is considered a poor fit. If there is "
         "no grey region, the model is considered a good fit at all times shown."
     ),
+    "nonlinear_mode_mixing_alternatives": (
+        "In this study, prediction D of \\textit{Black-Hole Cartography} "
+        "[arXiv:2410.13935](https://arxiv.org/abs/2410.13935) is used. "
+        "To ensure that the results are not sensitive to this choice, we also show the mode content results using "
+        "predictions BI, BII, and C of the same paper respectively below. In every case, the nonlinear modes are "
+        "present, albeit at slightly different start times. The main results of the paper are not affected by this choice."
+    ),
     "amplitude_stability": (
         "The decay-corrected amplitudes are shown below at a range of start times. "
-        "With the median as a bold line, and 90% region as shading around the line. "
+        "With the median as a bold line, and 90\\% region as shading around the line. "
         "Grey shaded regions indicate the times at which the model is considered a poor fit. If there is "
         "no grey region, the model is considered a good fit at all times shown."
     ),
@@ -83,8 +90,8 @@ descriptions = {
         "NR values is shown below. Also shown are a selection of posteriors at different start times."
     ),
     "PLT": (
-        "A PLT search was performed at t_0 = 50 M. The resulting corner plots for the amplitude, and start time of the PLT mode "
-        "are shown below for the model described in the Supplmental Material of the paper."
+        "A PLT search was performed at $t_0 = 50 M$. The resulting corner plots for the amplitude, and start time of the PLT mode "
+        "are shown below for the model described in the Supplemental Material of the paper."
     ),
 }
 
@@ -154,7 +161,7 @@ for sim_folder in sorted(os.listdir(figures_dir)):
             # Find all subfolders
             subfolder_order = ["mode_content", "amplitude_stability", "fits", "epsilon"]
             if sim_id == "0010":
-                subfolder_order = ["mode_content", "amplitude_stability", "fits", "epsilon", "PLT"]
+                subfolder_order = ["mode_content", "nonlinear_mode_mixing_alternatives", "amplitude_stability", "fits", "epsilon", "PLT"]
             for subfolder in subfolder_order:
                 subfolder_path = os.path.join(sim_path, subfolder)
                 if os.path.isdir(subfolder_path):
