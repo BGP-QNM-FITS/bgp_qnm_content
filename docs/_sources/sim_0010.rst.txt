@@ -51,7 +51,7 @@ The start times at which particular QNMs are present in the simulation are shown
 Nonlinear Mode Mixing Alternatives
 ----------------------------------
 
-In this study, prediction D of \textit{Black-Hole Cartography} [arXiv:2410.13935](https://arxiv.org/abs/2410.13935) is used. To ensure that the results are not sensitive to this choice, we also show the mode content results using predictions BI, BII, and C of the same paper respectively below. In every case, the nonlinear modes are present, albeit at slightly different start times. The main results of the paper are not affected by this choice.
+In this study, prediction D of `Black-Hole Cartography <https://arxiv.org/abs/2410.13935>`_ is used. To ensure that the results are not sensitive to this choice, we also show the mode content results using predictions BI, BII, and C of the same paper respectively below. In every case, the nonlinear modes are present, albeit at slightly different start times. The main results of the paper are not affected by this choice.
 
 .. image:: figures/0010/nonlinear_mode_mixing_alternatives/mode_content_B1.png
    :width: 600px
@@ -131,7 +131,7 @@ Using the model determined by the algorithm, the mass and spin of the remnant bl
 PLT
 ---
 
-A PLT search was performed at $t_0 = 50 M$. The resulting corner plots for the amplitude, and start time of the PLT mode are shown below for the model described in the Supplemental Material of the paper.
+A PLT search was performed at a start time of 50 M. The resulting corner plot for the amplitude, and start time of the (2,2) PLT mode are shown below for the model described in the Supplemental Material of the paper.
 
 .. image:: figures/0010/PLT/PLT_corner_22.png
    :width: 600px

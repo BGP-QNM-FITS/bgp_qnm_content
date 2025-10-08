@@ -34,3 +34,11 @@ html_sidebars = {
 html_css_files = [
     'custom.css',
 ]
+
+extensions = [
+    'sphinx.ext.mathjax',
+    # ... other extensions ...
+]
+
+extensions += ['myst_parser']
+myst_enable_extensions = ["dollarmath", "amsmath"]
