@@ -205,6 +205,15 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
                         mode_color = l_to_color.get(l, "#888888") 
                         pos = key_positions.get((l, m, n, np.sign(m)*1))
 
+                        #ax.broken_barh(
+                        #    [(t0 - width / 2, width)],
+                        #    (y - bar_height / 2, bar_height),
+                        #    facecolors=mode_color,
+                        #    alpha=alpha,
+                        #    edgecolor='none',
+                        #    hatch=hatch
+                        #)
+
         # Process all modes (QNM, QQNM, CQNM) in the same loop
         for group, modes in sorted_groups:
             ell, _ = group

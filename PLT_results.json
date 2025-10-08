@@ -1,0 +1,117 @@
+{
+    "(2,2)": {
+        "autocorrelation_times": [
+            17.24593489,
+            19.75596196,
+            62.74109633
+        ],
+        "percentile_90": 1.639791355225988e-05,
+        "n_iid_samples": 1394,
+        "n_steps": 5000,
+        "n_walkers": 50,
+        "A_PLT_prior": [
+            -0.1,
+            0.1
+        ],
+        "T_PLT_prior": [
+            -50,
+            40
+        ],
+        "lam_PLT_prior": [
+            1,
+            15
+        ]
+    },
+    "(3,3)": {
+        "autocorrelation_times": [
+            14.97008348,
+            12.86091514,
+            53.58425786
+        ],
+        "percentile_90": 1.2035153614096133e-05,
+        "n_iid_samples": 1632,
+        "n_steps": 5000,
+        "n_walkers": 50,
+        "A_PLT_prior": [
+            -0.1,
+            0.1
+        ],
+        "T_PLT_prior": [
+            -50,
+            40
+        ],
+        "lam_PLT_prior": [
+            1,
+            15
+        ]
+    },
+    "(4,4)": {
+        "autocorrelation_times": [
+            14.18369853,
+            13.84920344,
+            45.70641062
+        ],
+        "percentile_90": 7.735402931452636e-06,
+        "n_iid_samples": 1914,
+        "n_steps": 5000,
+        "n_walkers": 50,
+        "A_PLT_prior": [
+            -0.1,
+            0.1
+        ],
+        "T_PLT_prior": [
+            -50,
+            40
+        ],
+        "lam_PLT_prior": [
+            1,
+            15
+        ]
+    },
+    "(5,5)": {
+        "autocorrelation_times": [
+            12.22357828,
+            14.22925906,
+            51.8574474
+        ],
+        "percentile_90": 5.415274857745418e-06,
+        "n_iid_samples": 1687,
+        "n_steps": 5000,
+        "n_walkers": 50,
+        "A_PLT_prior": [
+            -0.1,
+            0.1
+        ],
+        "T_PLT_prior": [
+            -50,
+            40
+        ],
+        "lam_PLT_prior": [
+            1,
+            15
+        ]
+    },
+    "(6,6)": {
+        "autocorrelation_times": [
+            12.94084326,
+            11.65149118,
+            45.5239344
+        ],
+        "percentile_90": 3.623374132951909e-06,
+        "n_iid_samples": 1922,
+        "n_steps": 5000,
+        "n_walkers": 50,
+        "A_PLT_prior": [
+            -0.1,
+            0.1
+        ],
+        "T_PLT_prior": [
+            -50,
+            40
+        ],
+        "lam_PLT_prior": [
+            1,
+            15
+        ]
+    }
+}

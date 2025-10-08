@@ -163,7 +163,7 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, plotting_
             fig, ax = plt.subplots(figsize=(config.fig_width, config.fig_height), dpi=300)
 
             for mode in possible_modes_for_plot:
-                label=f'{mode}'
+                label= nonlinear_modes[mode] if mode in nonlinear_modes else f'({mode[0]}, {mode[1]}, {mode[2]}, +)'
                 if len(mode) == 4:
                     _, em, n, p = mode
                     if np.sign(em) != np.sign(p):
@@ -223,7 +223,7 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, plotting_
             ax.set_xlabel(r"Start time $t_0 \, [M]$")
             ax.set_title(fr"$\ell = {l}, m = {m}$")
             ax.set_yscale('log')
-            ax.legend(loc='upper right', frameon=False, fontsize=4.5)
+            ax.legend(loc='upper right', frameon=False, fontsize=4.5, handlelength=3)
 
             ax.set_ylabel(r"$|\hat{C}_{\alpha}|$")
             plt.subplots_adjust(wspace=0.05) 

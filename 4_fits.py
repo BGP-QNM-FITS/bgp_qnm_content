@@ -223,7 +223,7 @@ def __main__():
 
         t0_vals = np.array(mode_content_data_dict['times'])
         spherical_modes = [tuple(mode) for mode in mode_content_data_dict['spherical_modes']]
-
+        
         ppc_vals = mode_content_data_dict['p_values']
         below_threshold_idx = next((i for i, val in enumerate(ppc_vals) if val < PVAL_THRESHOLD), None)
         if below_threshold_idx is None or below_threshold_idx >= len(t0_vals):
@@ -262,7 +262,7 @@ def __main__():
             "ALL": (SPHERICAL_MODES_ALL, TARGET_MODES_ALL),
         }
 
-        spherical_modes, plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
+        _, plotting_modes = mode_rules_map[SPH_MODE_RULES[sim_id]]
         plot_residuals(sim_id, times, data, models, residuals, spherical_modes, plotting_modes, t0_choice)
 
 if __name__ == "__main__":

@@ -179,6 +179,9 @@ for sim_folder in sorted(os.listdir(figures_dir)):
                         elif sim_id == "0013":
 
                             f.write("Additional Notes\n----------------\n\n")
+                            f.write("**For this highly precessing system, we have found that QNM fits, and our algorithm, produce unreliable results. "
+                                    "Therefore while we include the results from this simulation for completeness, we caution the reader against drawing any conclusions from them.**" 
+                                    "\n\n")
                             f.write("This simulation contains multiple instances of a retrograde mode present without a prograde mode, "
                                     "which, in this exceptional case, have been shown on a separate plot as dotted regions. Furthermore, "
                                     "this is the only simulation found to contain a constant offset, which is shown in pink on the plots."

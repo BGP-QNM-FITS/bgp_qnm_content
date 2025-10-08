@@ -21,6 +21,12 @@ N_MAX = 6
 INCLUDE_CHIF = False
 INCLUDE_MF = False
 
+NSTEPS = 5000
+NWALKERS = 50
+A_PLT_PRIOR = (-0.1, 0.1)
+T_PLT_PRIOR = (t0-100, t0-10)
+LAM_PLT_PRIOR = (1, 15)
+
 sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
 tuned_param_dict_GP = bgp.get_tuned_param_dict("GP", data_type=DATA_TYPE)[sim_id]
 
@@ -39,6 +45,59 @@ param_names = [r"$\mathfrak{Re}A^{\beta}$", r"$\mathfrak{Im}A^{\beta}$", r"$t_{\
 
 results = {} 
 
+results = {
+      "(2,2)": {
+            "autocorrelation_times": [17.24593489, 19.75596196, 62.74109633],
+            "percentile_90": 1.639791355225988e-05,
+            "n_iid_samples": 1394,
+            "n_steps": NSTEPS,
+            "n_walkers": NWALKERS,
+            "A_PLT_prior": A_PLT_PRIOR,
+            "T_PLT_prior": T_PLT_PRIOR,
+            "lam_PLT_prior": LAM_PLT_PRIOR
+      },
+      "(3,3)": {
+            "autocorrelation_times": [14.97008348, 12.86091514, 53.58425786],
+            "percentile_90": 1.2035153614096133e-05,
+            "n_iid_samples": 1632,
+            "n_steps": NSTEPS,
+            "n_walkers": NWALKERS,
+            "A_PLT_prior": A_PLT_PRIOR,
+            "T_PLT_prior": T_PLT_PRIOR,
+            "lam_PLT_prior": LAM_PLT_PRIOR
+      },
+      "(4,4)": {
+            "autocorrelation_times": [14.18369853, 13.84920344, 45.70641062],
+            "percentile_90": 7.735402931452636e-06,
+            "n_iid_samples": 1914,
+            "n_steps": NSTEPS,
+            "n_walkers": NWALKERS,
+            "A_PLT_prior": A_PLT_PRIOR,
+            "T_PLT_prior": T_PLT_PRIOR,
+            "lam_PLT_prior": LAM_PLT_PRIOR
+      },
+      "(5,5)": {
+            "autocorrelation_times": [12.22357828, 14.22925906, 51.8574474],
+            "percentile_90": 5.415274857745418e-06,
+            "n_iid_samples": 1687,
+            "n_steps": NSTEPS,
+            "n_walkers": NWALKERS,
+            "A_PLT_prior": A_PLT_PRIOR,
+            "T_PLT_prior": T_PLT_PRIOR,
+            "lam_PLT_prior": LAM_PLT_PRIOR
+      },
+      "(6,6)": {
+            "autocorrelation_times": [12.94084326, 11.65149118, 45.5239344],
+            "percentile_90": 3.623374132951909e-06,
+            "n_iid_samples": 1922,
+            "n_steps": NSTEPS,
+            "n_walkers": NWALKERS,
+            "A_PLT_prior": A_PLT_PRIOR,
+            "T_PLT_prior": T_PLT_PRIOR,
+            "lam_PLT_prior": LAM_PLT_PRIOR
+      }
+}
+
 for PLT_mode in target_sph_modes:
 
     m = PLT_mode[1]
@@ -53,7 +112,7 @@ for PLT_mode in target_sph_modes:
                     (len(c) == 8 and c[1] + c[5] == m) or
                     (len(c) == 12 and c[1] + c[5] + c[9] == m)
                 ]
-
+    
     fit = bgp.PLT_BGP_fit(
         sim.times,
         sim.h,
@@ -65,11 +124,11 @@ for PLT_mode in target_sph_modes:
         t0=t0,
         PLT_modes=PLT_modes,
         lam_PLT_val = lams,
-        A_PLT_prior = (-0.1, 0.1),
-        t_PLT_prior = (t0-100, t0-10),
-        lam_PLT_prior = (1, 14),
-        nsteps=5000,
-        nwalkers=50,
+        A_PLT_prior = A_PLT_PRIOR,
+        t_PLT_prior = T_PLT_PRIOR,
+        lam_PLT_prior = LAM_PLT_PRIOR,
+        nsteps=NSTEPS,
+        nwalkers=NWALKERS,
         T=T,
         spherical_modes=fit_sph_modes,
         include_chif=INCLUDE_CHIF,
@@ -123,9 +182,14 @@ for PLT_mode in target_sph_modes:
     results[str(PLT_modes[0])] = {
         "autocorrelation_times": autocorrelation_time.tolist(),
         "percentile_90": percentile_90,
-        "n_iid_samples": n_iid_samples
+        "n_iid_samples": n_iid_samples,
+        "n_steps": NSTEPS,
+        "n_walkers": NWALKERS,
+        "A_PLT_prior": A_PLT_PRIOR,
+        "T_PLT_prior": T_PLT_PRIOR,
+        "lam_PLT_prior": LAM_PLT_PRIOR
     }
 
-with open(f"{outdir}/PLT_results.json", "w") as f:
+with open(f"PLT_results.json", "w") as f:
     json.dump(results, f, indent=4) 
 
