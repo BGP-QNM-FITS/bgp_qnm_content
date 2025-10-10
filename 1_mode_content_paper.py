@@ -269,7 +269,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
     for label, pos in zip(ordered_labels, ordered_positions):
         if label == '(2,2,0)':
             ax.text(
-                ax.get_xlim()[0] + 1.73 * dt,
+                ax.get_xlim()[0] + 2.8 * dt,
                 pos,                
                 label,
                 va='bottom',                  
@@ -323,6 +323,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
         print(f"No threshold index found for simulation {sim_id}.")
 
     ax.set_xlabel(r"Start time $t_0 \, [M]$")
+    ax.set_ylabel("Ringdown mode $(\ell, m, n)$")
     ax.set_xlim(t0_vals[0], t0_vals[-1])
     ax.set_ylim(-0.5, y_pos - 0.3)
     ax.tick_params(axis='y', direction='out', which='both', right=False)

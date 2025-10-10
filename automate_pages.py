@@ -70,7 +70,7 @@ descriptions = {
     "nonlinear_mode_mixing_alternatives": (
         "In this study, prediction D of `Black-Hole Cartography <https://arxiv.org/abs/2410.13935>`_ is used. "
         "To ensure that the results are not sensitive to this choice, we also show the mode content results using "
-        "predictions BI, BII, and C of the same paper respectively below. In every case, the nonlinear modes are "
+        "predictions Bi, Bii, and C of the same paper respectively below. In every case, the nonlinear modes are "
         "present, albeit at slightly different start times. The main results of the paper are not affected by this choice."
     ),
     "amplitude_stability": (

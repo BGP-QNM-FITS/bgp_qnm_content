@@ -212,8 +212,7 @@ def plot_residuals(sim_id, times, data, models, residuals, spherical_modes, plot
         plt.close()
 
 def __main__():
-    #sim_ids = [f"{i:04}" for i in range(1, 13)]
-    sim_ids = ["0013"]
+    sim_ids = [f"{i:04}" for i in range(1, 14)]
     for sim_id in sim_ids:
 
         sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
@@ -223,7 +222,7 @@ def __main__():
 
         t0_vals = np.array(mode_content_data_dict['times'])
         spherical_modes = [tuple(mode) for mode in mode_content_data_dict['spherical_modes']]
-        
+
         ppc_vals = mode_content_data_dict['p_values']
         below_threshold_idx = next((i for i, val in enumerate(ppc_vals) if val < PVAL_THRESHOLD), None)
         if below_threshold_idx is None or below_threshold_idx >= len(t0_vals):

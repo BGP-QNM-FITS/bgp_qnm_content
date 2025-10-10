@@ -149,3 +149,24 @@ Fits of the model and data are shown below, including residuals. The start time 
    :width: 600px
    :alt: fits_66.png
 
+Epsilon
+-------
+
+Using the model determined by the algorithm, the mass and spin of the remnant black hole are estimated, and compared to the values obtained from a fit containing all possible modes. The root square distance from the NR values is shown below. Also shown are a selection of posteriors at different start times.
+
+.. image:: figures/0013/epsilon/epsilon.png
+   :width: 600px
+   :alt: epsilon.png
+
+.. image:: figures/0013/epsilon/posterior_20.0.png
+   :width: 600px
+   :alt: posterior_20.0.png
+
+.. image:: figures/0013/epsilon/posterior_40.0.png
+   :width: 600px
+   :alt: posterior_40.0.png
+
+.. image:: figures/0013/epsilon/posterior_60.0.png
+   :width: 600px
+   :alt: posterior_60.0.png
+

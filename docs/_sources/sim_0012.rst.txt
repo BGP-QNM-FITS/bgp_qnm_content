@@ -107,29 +107,13 @@ Using the model determined by the algorithm, the mass and spin of the remnant bl
    :width: 600px
    :alt: epsilon.png
 
-.. image:: figures/0012/epsilon/posterior_0.0.png
-   :width: 600px
-   :alt: posterior_0.0.png
-
 .. image:: figures/0012/epsilon/posterior_10.0.png
    :width: 600px
    :alt: posterior_10.0.png
 
-.. image:: figures/0012/epsilon/posterior_20.0.png
-   :width: 600px
-   :alt: posterior_20.0.png
-
-.. image:: figures/0012/epsilon/posterior_30.0.png
-   :width: 600px
-   :alt: posterior_30.0.png
-
 .. image:: figures/0012/epsilon/posterior_40.0.png
    :width: 600px
    :alt: posterior_40.0.png
-
-.. image:: figures/0012/epsilon/posterior_50.0.png
-   :width: 600px
-   :alt: posterior_50.0.png
 
 .. image:: figures/0012/epsilon/posterior_60.0.png
    :width: 600px

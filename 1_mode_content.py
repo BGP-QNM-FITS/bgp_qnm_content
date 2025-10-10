@@ -294,7 +294,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
     for label, pos in zip(ordered_labels, ordered_positions):
         if label == '(2,2,0)':
             ax.text(
-                ax.get_xlim()[0] + 1.73 * dt,
+                ax.get_xlim()[0] + 1.7 * dt,
                 pos,                
                 label,
                 va='bottom',                  
@@ -342,6 +342,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
         print(f"No threshold index found for simulation {sim_id}.")
 
     ax.set_xlabel(r"Start time $t_0 \, [M]$")
+    ax.set_ylabel("Mode $(\ell, m, n)$", fontsize=6)
     ax.set_xlim(t0_vals[0], t0_vals[-1])
     ax.set_ylim(-0.5, y_pos - 0.3)
     ax.tick_params(axis='y', direction='out', which='both', right=False)
@@ -351,16 +352,16 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
     plt.tight_layout()
     outdir = f"docs/figures/{sim_id}/mode_content"
     os.makedirs(outdir, exist_ok=True)
-    plt.savefig(f"{outdir}/mode_content.png", bbox_inches="tight")
+    plt.savefig(f"{outdir}/mode_content_C.png", bbox_inches="tight")
     plt.close()
 
 
 def __main__():
-    #sim_ids = [f"{i:04}" for i in range(1, 13)]
-    sim_ids = ["0013"]
+    #sim_ids = [f"{i:04}" for i in range(1, 14)]
+    sim_ids = ["0010"]
     for sim_id in sim_ids:
 
-        with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
+        with open(f'mode_content_files/mode_content_data_{sim_id}_C.json', 'r') as f:
             mode_content_data_dict = json.load(f)
 
         t0_vals = np.array(mode_content_data_dict['times'])

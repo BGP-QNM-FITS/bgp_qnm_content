@@ -152,17 +152,17 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, spherical_modes
                     lowers[i] = np.percentile(fits[tidx].fit["sample_amplitudes"][:, idx], 5)
                     uppers[i] = np.percentile(fits[tidx].fit["sample_amplitudes"][:, idx], 95)
                 if len(temp_t0_vals) > 1:
-                    ax.plot(temp_t0_vals - 1, amps,
+                    ax.plot(temp_t0_vals - 0.5, amps,
                             color=color, alpha=alpha, lw=lw,
                             label=label if run[0] == runs[0][0] else "",
                             ls=ls)
-                    ax.fill_between(temp_t0_vals - 1, lowers, uppers, color=color, alpha=0.4, linewidth=0)
+                    ax.fill_between(temp_t0_vals - 0.5, lowers, uppers, color=color, alpha=0.4, linewidth=0)
                 else:
-                    ax.plot([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [amps[0], amps[0]],
+                    ax.plot([temp_t0_vals[0] - 0.5, temp_t0_vals[0] + 0.5], [amps[0], amps[0]],
                             color=color, alpha=alpha, lw=lw,
                             label=label if run[0] == runs[0][0] else "",
                             ls=ls)
-                    ax.fill_between([temp_t0_vals[0] - 1, temp_t0_vals[0] + 1], [lowers[0], lowers[0]], [uppers[0], uppers[0]], color=color, alpha=0.4, linewidth=0)
+                    ax.fill_between([temp_t0_vals[0] - 0.5, temp_t0_vals[0] + 0.5], [lowers[0], lowers[0]], [uppers[0], uppers[0]], color=color, alpha=0.4, linewidth=0)
 
         threshold_idx = next((i for i in reversed(range(len(p_values))) if p_values[i] > PVAL_THRESHOLD), None)
         if threshold_idx is not None:

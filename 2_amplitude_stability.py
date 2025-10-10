@@ -51,7 +51,7 @@ nonlinear_linestyle = {
         (2,-2,0,-1,2,-2,0,-1): '-',
         (2,-2,0,-1,3,-3,0,-1): '-',
         (3,-3,0,-1,3,-3,0,-1): ':',
-        (2,-2,0,-1,4,-4,0,-1): '-',
+        (2,-2,0,-1,4,-4,0,-1): '--',
         (2,-2,0,-1,2,-2,0,-1,2,-2,0,-1): '-'
     }
 
@@ -163,7 +163,12 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, plotting_
             fig, ax = plt.subplots(figsize=(config.fig_width, config.fig_height), dpi=300)
 
             for mode in possible_modes_for_plot:
-                label= nonlinear_modes[mode] if mode in nonlinear_modes else f'({mode[0]}, {mode[1]}, {mode[2]}, +)'
+                label = (
+                    nonlinear_modes[mode] if mode in nonlinear_modes 
+                    else '' if len(mode) == 2
+                    else f'({mode[0]}, {mode[1]}, {mode[2]}, +)' if np.sign(mode[3]) == 1 
+                    else f'({mode[0]}, {mode[1]}, {mode[2]}, -)'
+                )
                 if len(mode) == 4:
                     _, em, n, p = mode
                     if np.sign(em) != np.sign(p):
@@ -173,12 +178,13 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, plotting_
                     ls = '-'
                     lw = 2-0.25*n
                 elif len(mode) == 2:
+                    continue
                     p = 1
                     n = 0
                     alpha = 1.0 
                     color = special_color_1
                     ls = nonlinear_linestyle.get(mode, '-')
-                    lw = 1.5
+                    lw = 1.5 
                 elif len(mode) == 8 or len(mode) == 12:
                     p = 1
                     n = 0
@@ -235,7 +241,7 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, plotting_
 
 
 def __main__():
-    #sim_ids = [f"{i:04}" for i in range(1, 13)]
+    #sim_ids = [f"{i:04}" for i in range(1, 14)]
     sim_ids = ["0013"]
     for sim_id in sim_ids:
 

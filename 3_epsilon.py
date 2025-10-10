@@ -92,8 +92,8 @@ def plot_epsilon_main(sim_id, mode_content_data_dict, Mf_ref, chif_ref, t0_vals,
     for i, t0 in enumerate(t0_vals):
         Mf_adaptive, chif_adaptive = fits[i].fit["samples"][:, -1], fits[i].fit["samples"][:, -2]
         Mf_full, chif_full = fits_full.fits[i]["samples"][:, -1], fits_full.fits[i]["samples"][:, -2]
-        epsilon_adaptive = np.sqrt((Mf_ref - Mf_adaptive)**2 / Mf_ref**2 + (chif_ref - chif_adaptive)**2 / chif_ref**2)
-        epsilon_full = np.sqrt((Mf_ref - Mf_full)**2 / Mf_ref**2 + (chif_ref - chif_full)**2 / chif_ref**2)
+        epsilon_adaptive = np.sqrt((Mf_ref - Mf_adaptive)**2 / Mf_ref**2 + (chif_ref - chif_adaptive)**2)
+        epsilon_full = np.sqrt((Mf_ref - Mf_full)**2 / Mf_ref**2 + (chif_ref - chif_full)**2)
         epsilons_adaptive[i, :] = epsilon_adaptive
         epsilons_full[i, :] = epsilon_full
 
@@ -152,8 +152,7 @@ def plot_epsilon_corners(sim_id, Mf_ref, chif_ref, t0_vals, fits, fits_full):
         plt.close(fig)
 
 def __main__():
-    #sim_ids = [f"{i:04}" for i in range(1, 14)]
-    sim_ids = ["0013"]
+    sim_ids = [f"{i:04}" for i in range(1, 14)]
     for sim_id in sim_ids:
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:
             mode_content_data_dict = json.load(f)
