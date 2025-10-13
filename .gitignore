@@ -10,6 +10,9 @@ dev/
 0013_mode_content_files/
 0013_mode_content_files_2/
 0305/
+mode_content_compiled/
+mode_content_fast/
+mode_content_files_deprec/
 test.ipynb 
 
 # Ignore system files
