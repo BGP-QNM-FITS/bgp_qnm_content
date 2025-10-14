@@ -1,8 +1,6 @@
 import os
 import json
 import re
-import bgp_qnm_fits as bgp 
-import numpy as np 
 from collections import defaultdict
 
 sim_id = "0010"
@@ -13,15 +11,15 @@ output_file = f"mode_content_compiled/mode_content_data_{sim_id}_6.json"
 # Prepare containers for each t0
 t0_data = defaultdict(list)
 metadata = {}
-metadata["spherical_modes"] = [] 
+metadata["spherical_modes"] = []
 metadata["initial_modes"] = []
 metadata["candidate_modes"] = []
 first_file = True
 done_m = set()
 
 # Scan all files
-for fname in sorted(os.listdir(input_dir)): 
-    match = re.match(fr"mode_content_data_{sim_id}_(\d+)_(\d+\.?\d*)\.json", fname)
+for fname in sorted(os.listdir(input_dir)):
+    match = re.match(rf"mode_content_data_{sim_id}_(\d+)_(\d+\.?\d*)\.json", fname)
     if not match:
         continue
     m = int(match.group(1))
@@ -45,9 +43,9 @@ for fname in sorted(os.listdir(input_dir)):
 
     t0_data[t0].extend(data["modes"][0])
 
-# Scan all negative m files 
+# Scan all negative m files
 for fname in sorted(os.listdir(input_dir)):
-    match = re.match(fr"mode_content_data_{sim_id}_[-m](\d+)_(\d+\.?\d*)\.json", fname)
+    match = re.match(rf"mode_content_data_{sim_id}_[-m](\d+)_(\d+\.?\d*)\.json", fname)
     if not match:
         continue
     m = -int(match.group(1))

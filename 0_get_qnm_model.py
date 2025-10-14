@@ -9,23 +9,29 @@ import json
 import bgp_qnm_fits as bgp
 import time
 
-DATA_TYPE = 'news'
+DATA_TYPE = "news"
 L_MAX = 7
 
 SPHERICAL_MODES_PES = [(2, 2), (3, 2), (4, 2)]
 
-SPHERICAL_MODES_PS = [(2, 2), (3, 2),
-                     (3, 3), (4, 3)] 
+SPHERICAL_MODES_PS = [(2, 2), (3, 2), (3, 3), (4, 3)]
 
 SPHERICAL_MODES_ALLS = SPHERICAL_MODES_PS + [(l, -m) for l, m in SPHERICAL_MODES_PS]
 
 SPHERICAL_MODES_ES = SPHERICAL_MODES_PES + [(l, -m) for l, m in SPHERICAL_MODES_PES]
 
-SPHERICAL_MODES_P = [(2, 2), (3, 2),
-                     (3, 3), (4, 3), 
-                     (4, 4), (5, 4),
-                     (5, 5), (6, 5),
-                     (6, 6), (7, 6)] 
+SPHERICAL_MODES_P = [
+    (2, 2),
+    (3, 2),
+    (3, 3),
+    (4, 3),
+    (4, 4),
+    (5, 4),
+    (5, 5),
+    (6, 5),
+    (6, 6),
+    (7, 6),
+]
 
 SPHERICAL_MODES_ALL = SPHERICAL_MODES_P + [(l, -m) for l, m in SPHERICAL_MODES_P]
 
@@ -54,23 +60,24 @@ SPH_MODE_RULES = {
 
 log_threshold = np.log(THRESHOLD)
 
-FILENAME = f'mode_content_files/mode_content_data'
+FILENAME = f"mode_content_files/mode_content_data"
 
 t0_vals = np.arange(0, 60.1, 2)
 
+
 def get_mode_list(sim_id, initial_modes, candidate_modes, spherical_modes):
-    
+
     sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
     tuned_param_dict_GP = bgp.get_tuned_param_dict("GP", data_type=DATA_TYPE)[sim_id]
     Mf, chif = sim.Mf, sim.chif_mag
 
-    full_modes_list = [] 
-    p_values_median = [] 
+    full_modes_list = []
+    p_values_median = []
 
     for t0 in t0_vals:
-            
-        print(f'Fitting from t0={t0}')
-        
+
+        print(f"Fitting from t0={t0}")
+
         select_object = bgp.BGP_select(
             sim.times,
             sim.h,
@@ -88,22 +95,21 @@ def get_mode_list(sim_id, initial_modes, candidate_modes, spherical_modes):
             spherical_modes=spherical_modes,
             include_chif=INCLUDE_CHIF,
             include_Mf=INCLUDE_MF,
-            data_type=DATA_TYPE
+            data_type=DATA_TYPE,
         )
 
         full_modes_list.append(select_object.full_modes)
-        p_values_median.append(np.median(select_object.p_values)) 
+        p_values_median.append(np.median(select_object.p_values))
 
     return full_modes_list, p_values_median
 
 
 def __main__():
 
-    sim_ids = ["0010"]
-
+    sim_ids = [f"{i:04}" for i in range(1, 14)]
     for sim_id in sim_ids:
 
-        candidate_mode_extras = [] 
+        candidate_mode_extras = []
 
         if SPH_MODE_RULES[sim_id] == "PES":
             spherical_modes = SPHERICAL_MODES_PES
@@ -118,31 +124,39 @@ def __main__():
             spherical_modes = SPHERICAL_MODES_ALLS
 
         elif SPH_MODE_RULES[sim_id] == "P":
-            candidate_mode_extras = [(2,2,0,1,2,2,0,1), 
-                                     (2,2,0,1,3,3,0,1),
-                                     (3,3,0,1,3,3,0,1), 
-                                     (2,2,0,1,4,4,0,1),
-                                     (2,2,0,1,2,2,0,1,2,2,0,1)]
+            candidate_mode_extras = [
+                (2, 2, 0, 1, 2, 2, 0, 1),
+                (2, 2, 0, 1, 3, 3, 0, 1),
+                (3, 3, 0, 1, 3, 3, 0, 1),
+                (2, 2, 0, 1, 4, 4, 0, 1),
+                (2, 2, 0, 1, 2, 2, 0, 1, 2, 2, 0, 1),
+            ]
             spherical_modes = SPHERICAL_MODES_P
 
         elif SPH_MODE_RULES[sim_id] == "ALL":
-            candidate_mode_extras = [(2,2,0,1,2,2,0,1), 
-                                     (2,2,0,1,3,3,0,1),
-                                     (3,3,0,1,3,3,0,1), 
-                                     (2,2,0,1,4,4,0,1),
-                                     (2,2,0,1,2,2,0,1,2,2,0,1)] + \
-                                    [(2,-2,0,-1,2,-2,0,-1), 
-                                     (2,-2,0,-1,3,-3,0,-1),
-                                     (3,-3,0,-1,3,-3,0,-1), 
-                                     (2,-2,0,-1,4,-4,0,-1),
-                                     (2,-2,0,-1,2,-2,0,-1,2,-2,0,-1)]
-                                     
+            candidate_mode_extras = [
+                (2, 2, 0, 1, 2, 2, 0, 1),
+                (2, 2, 0, 1, 3, 3, 0, 1),
+                (3, 3, 0, 1, 3, 3, 0, 1),
+                (2, 2, 0, 1, 4, 4, 0, 1),
+                (2, 2, 0, 1, 2, 2, 0, 1, 2, 2, 0, 1),
+            ] + [
+                (2, -2, 0, -1, 2, -2, 0, -1),
+                (2, -2, 0, -1, 3, -3, 0, -1),
+                (3, -3, 0, -1, 3, -3, 0, -1),
+                (2, -2, 0, -1, 4, -4, 0, -1),
+                (2, -2, 0, -1, 2, -2, 0, -1, 2, -2, 0, -1),
+            ]
+
             spherical_modes = SPHERICAL_MODES_ALL
 
         initial_modes = [(*s, 0, 1 if s[1] > 0 else -1) for s in spherical_modes]
-        candidate_modes = [(*s, n, 1) for s in spherical_modes for n in range(0, N_MAX + 1)] + \
-                        [(*s, n, -1) for s in spherical_modes for n in range(0, N_MAX + 1)] + \
-                        spherical_modes + candidate_mode_extras
+        candidate_modes = (
+            [(*s, n, 1) for s in spherical_modes for n in range(0, N_MAX + 1)]
+            + [(*s, n, -1) for s in spherical_modes for n in range(0, N_MAX + 1)]
+            + spherical_modes
+            + candidate_mode_extras
+        )
 
         print(f"Starting mode selection for simulation ID: {sim_id}")
         print(f"Using initial modes: {initial_modes}")
@@ -160,12 +174,15 @@ def __main__():
             "include_Mf": INCLUDE_MF,
         }
         start_time = time.time()
-        mode_selection_data[f"modes"], mode_selection_data[f"p_values"] = get_mode_list(sim_id, initial_modes, candidate_modes, spherical_modes)
+        mode_selection_data[f"modes"], mode_selection_data[f"p_values"] = get_mode_list(
+            sim_id, initial_modes, candidate_modes, spherical_modes
+        )
         end_time = time.time()
         mode_selection_data[f"run_time"] = end_time - start_time
 
-        with open(f'{FILENAME}_{sim_id}_B2.json', 'w') as f:
+        with open(f"{FILENAME}_{sim_id}_B2.json", "w") as f:
             json.dump(mode_selection_data, f)
+
 
 if __name__ == "__main__":
     __main__()

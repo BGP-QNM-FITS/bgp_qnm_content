@@ -6,39 +6,39 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'QNM Content Site'
-copyright = '2025, Richard Dyer and Christopher Moore'
-author = 'Richard Dyer and Christopher Moore'
+project = "QNM Content Site"
+copyright = "2025, Richard Dyer and Christopher Moore"
+author = "Richard Dyer and Christopher Moore"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = []
 
-templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+templates_path = ["_templates"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'alabaster'
-html_static_path = ['_static']
+html_theme = "alabaster"
+html_static_path = ["_static"]
 html_sidebars = {
-    '**': [
-        'about.html',
-        'navigation.html',
+    "**": [
+        "about.html",
+        "navigation.html",
         # 'relations.html',  # next/prev links (optional)
         # 'searchbox.html',  # search box (optional)
     ]
 }
 html_css_files = [
-    'custom.css',
+    "custom.css",
 ]
 
 extensions = [
-    'sphinx.ext.mathjax',
+    "sphinx.ext.mathjax",
     # ... other extensions ...
 ]
 
-extensions += ['myst_parser']
+extensions += ["myst_parser"]
 myst_enable_extensions = ["dollarmath", "amsmath"]

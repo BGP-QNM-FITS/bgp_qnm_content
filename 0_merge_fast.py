@@ -9,6 +9,7 @@ main_file = MAIN_DIR / f"mode_content_data_{SIM_ID}_D.json"
 merge_file = COMPILED_DIR / f"mode_content_data_{SIM_ID}_2.json"
 output_file = MAIN_DIR / f"mode_content_data_{SIM_ID}_merged.json"
 
+
 def merge_main_with_compiled(main_data, comp_data):
 
     main_times = list(main_data.get("times", []))
@@ -26,7 +27,7 @@ def merge_main_with_compiled(main_data, comp_data):
     main_sph_set = set(tuple(sm) for sm in main_sph)
     comp_sph_set = set(tuple(sm) for sm in comp_data.get("spherical_modes", []))
 
-    # Add the new spherical modes into the main spherical mode set 
+    # Add the new spherical modes into the main spherical mode set
 
     for sm in comp_sph_set:
         if sm not in main_sph_set:
@@ -48,13 +49,13 @@ def merge_main_with_compiled(main_data, comp_data):
             for q in existing_q:
                 if len(q) == 4:
                     if tuple(q[0:2]) in comp_sph_set:
-                        continue 
+                        continue
                 elif len(q) == 2:
-                    None # keep the constant offsets - again this is a fix not a general behaviour! 
+                    None  # keep the constant offsets - again this is a fix not a general behaviour!
                 elif len(q) != 4:
-                    continue 
-                    # Nonlinear modes removed by default!! Current lists definitely need overriding but 
-                    # this is not general! 
+                    continue
+                    # Nonlinear modes removed by default!! Current lists definitely need overriding but
+                    # this is not general!
                 filtered.append(tuple(q))
             # add compiled qnms (avoid duplicates)
             for q in comp_q_tuples:
@@ -62,7 +63,9 @@ def merge_main_with_compiled(main_data, comp_data):
                     filtered.append(q)
             # store as lists
             main_modes[i_main] = [list(q) for q in filtered]
-            print(f"Overrode time {t_comp}: removed {len(existing_q)-len(filtered)+len([q for q in comp_q_tuples if q not in existing_q])} / updated entries")
+            print(
+                f"Overrode time {t_comp}: removed {len(existing_q)-len(filtered)+len([q for q in comp_q_tuples if q not in existing_q])} / updated entries"
+            )
         else:
             # insert new time preserving sorted order of times
             # find insert position to keep main_times sorted
@@ -72,7 +75,9 @@ def merge_main_with_compiled(main_data, comp_data):
             main_times.insert(insert_pos, t_comp)
             # filtered: start from existing list empty then add compiled qnms (dedupe trivially)
             main_modes.insert(insert_pos, [list(q) for q in comp_q_tuples])
-            print(f"Inserted new time {t_comp} with {len(comp_q_tuples)} qnms at pos {insert_pos}")
+            print(
+                f"Inserted new time {t_comp} with {len(comp_q_tuples)} qnms at pos {insert_pos}"
+            )
 
     # assign back
     main_data["times"] = main_times
@@ -92,6 +97,7 @@ def main():
         json.dump(merged, f, indent=2)
 
     print(f"Wrote merged file to {output_file}")
+
 
 if __name__ == "__main__":
     main()

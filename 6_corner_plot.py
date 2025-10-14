@@ -3,8 +3,6 @@ import json
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from matplotlib import pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap, to_hex
 from plot_config import PlotConfig
 import bgp_qnm_fits as bgp
 
@@ -12,13 +10,14 @@ import bgp_qnm_fits as bgp
 config = PlotConfig()
 config.apply_style()
 
-DATA_TYPE = 'news'
+DATA_TYPE = "news"
 T = 100
 INCLUDE_CHIF = False
 INCLUDE_MF = False
 NUM_SAMPLES = 2000
 
 OUTDIR_BASE = "docs/front_page_figures"
+
 
 def run_single_corner(sim_id, t0_val=10.0):
     path = f"mode_content_files/mode_content_data_{sim_id}.json"
@@ -34,7 +33,9 @@ def run_single_corner(sim_id, t0_val=10.0):
     select_modes = [tuple(m) for m in modes_by_time[idx]]
 
     sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")
-    tuned_param_dict_GP = bgp.get_tuned_param_dict("GP", data_type=DATA_TYPE).get(sim_id)
+    tuned_param_dict_GP = bgp.get_tuned_param_dict("GP", data_type=DATA_TYPE).get(
+        sim_id
+    )
 
     fit_obj = bgp.BGP_fit(
         sim.times,
@@ -62,7 +63,6 @@ def run_single_corner(sim_id, t0_val=10.0):
             amp_indices.append(i)
             amp_labels.append(m[2])
 
-    n_params = posterior_samples.shape[1]
     df = pd.DataFrame()
 
     for idx_mode, n in zip(amp_indices, amp_labels):
@@ -88,12 +88,13 @@ def run_single_corner(sim_id, t0_val=10.0):
     for ax in grid.axes.flatten():
         if ax is None:
             continue
-        ax.tick_params(axis='both', which='major', labelsize=8)
+        ax.tick_params(axis="both", which="major", labelsize=8)
 
     out_path = os.path.join(OUTDIR_BASE, f"corner_plot.png")
     grid.tight_layout()
     grid.savefig(out_path, bbox_inches="tight", dpi=300)
     print(f"Wrote corner plot to {out_path}")
+
 
 if __name__ == "__main__":
     run_single_corner("0010", t0_val=10.0)

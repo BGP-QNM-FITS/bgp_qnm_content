@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 
+
 class PlotConfig:
     def __init__(self):
         self.style = "stylesheet.mplstyle"
@@ -22,8 +23,12 @@ class PlotConfig:
             "#D87570",
             "#DE6A5E",
         ]
-        self.colormap = LinearSegmentedColormap.from_list("custom_colormap", self.colors)
-        self.colormap2 = LinearSegmentedColormap.from_list("custom_colormap2", self.colors2)
+        self.colormap = LinearSegmentedColormap.from_list(
+            "custom_colormap", self.colors
+        )
+        self.colormap2 = LinearSegmentedColormap.from_list(
+            "custom_colormap2", self.colors2
+        )
 
     def apply_style(self):
         plt.style.use(self.style)

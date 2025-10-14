@@ -1,10 +1,7 @@
-import os
 import json
 from pathlib import Path
-import re
 import bgp_qnm_fits as bgp
 import numpy as np
-from collections import defaultdict
 from tqdm import tqdm
 
 SIM_ID = "0013"
