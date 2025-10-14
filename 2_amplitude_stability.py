@@ -242,7 +242,7 @@ def get_amplitude_stability_plot(fits, sim_id, mode_content_data_dict, plotting_
 
 def __main__():
     #sim_ids = [f"{i:04}" for i in range(1, 14)]
-    sim_ids = ["0013"]
+    sim_ids = ["0010", "0011", "0012", "0013"]
     for sim_id in sim_ids:
 
         with open(f'mode_content_files/mode_content_data_{sim_id}.json', 'r') as f:

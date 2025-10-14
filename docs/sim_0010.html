@@ -80,23 +80,27 @@
 </div>
 <section id="mode-content">
 <h2>Mode Content<a class="headerlink" href="#mode-content" title="Link to this heading">¶</a></h2>
-<p>The start times at which particular QNMs are present in the simulation are shown below. Solid lines indicate prograde modes present, ordered by overtone number. Hatched lines indicate that the retrograde mode is also present. Grey shaded regions indicate the times at which the model is considered a poor fit. If there is no grey region, the model is considered a good fit at all times shown.</p>
+<p>Times QNMs are present is shown below. Solid lines indicate prograde modes, hatched lines indicate retrograde modes. Vertical grey shaded regions (where present) show poor fit times.</p>
+</section>
+<section id="additional-notes">
+<h2>Additional Notes<a class="headerlink" href="#additional-notes" title="Link to this heading">¶</a></h2>
+<p>This simulation contains one instance of a retrograde mode present without a prograde mode, which is not shown on the mode content plot. This is the (4, 4, 6, -) mode at timestep t0 = 2.0 [M].</p>
 <a class="reference internal image-reference" href="_images/mode_content9.png"><img alt="mode_content.png" src="_images/mode_content9.png" style="width: 600px;" />
 </a>
 </section>
 <section id="nonlinear-mode-mixing-alternatives">
 <h2>Nonlinear Mode Mixing Alternatives<a class="headerlink" href="#nonlinear-mode-mixing-alternatives" title="Link to this heading">¶</a></h2>
-<p>In this study, prediction D of <a class="reference external" href="https://arxiv.org/abs/2410.13935">Black-Hole Cartography</a> is used. To ensure that the results are not sensitive to this choice, we also show the mode content results using predictions Bi, Bii, and C of the same paper respectively below. In every case, the nonlinear modes are present, albeit at slightly different start times. The main results of the paper are not affected by this choice.</p>
+<p>Prediction C of <a class="reference external" href="https://arxiv.org/abs/2410.13935">Black-Hole Cartography</a> is used. Results with predictions Bi, Bii, and D are also shown below.</p>
 <a class="reference internal image-reference" href="_images/mode_content_B1.png"><img alt="mode_content_B1.png" src="_images/mode_content_B1.png" style="width: 600px;" />
 </a>
 <a class="reference internal image-reference" href="_images/mode_content_B2.png"><img alt="mode_content_B2.png" src="_images/mode_content_B2.png" style="width: 600px;" />
 </a>
-<a class="reference internal image-reference" href="_images/mode_content_C.png"><img alt="mode_content_C.png" src="_images/mode_content_C.png" style="width: 600px;" />
+<a class="reference internal image-reference" href="_images/mode_content_D.png"><img alt="mode_content_D.png" src="_images/mode_content_D.png" style="width: 600px;" />
 </a>
 </section>
 <section id="amplitude-stability">
 <h2>Amplitude Stability<a class="headerlink" href="#amplitude-stability" title="Link to this heading">¶</a></h2>
-<p>The decay-corrected amplitudes are shown below at a range of start times. With the median as a bold line, and 90% region as shading around the line. Grey shaded regions indicate the times at which the model is considered a poor fit. If there is no grey region, the model is considered a good fit at all times shown.</p>
+<p>Decay-corrected amplitudes are shown with the median as a bold line and 90% region shaded. Vertical grey shaded regions (where present) show poor fit times.</p>
 <a class="reference internal image-reference" href="_images/amplitude_stability_229.png"><img alt="amplitude_stability_22.png" src="_images/amplitude_stability_229.png" style="width: 600px;" />
 </a>
 <a class="reference internal image-reference" href="_images/amplitude_stability_334.png"><img alt="amplitude_stability_33.png" src="_images/amplitude_stability_334.png" style="width: 600px;" />
@@ -110,7 +114,7 @@
 </section>
 <section id="fits">
 <h2>Fits<a class="headerlink" href="#fits" title="Link to this heading">¶</a></h2>
-<p>Fits of the model and data are shown below, including residuals. The start time of the fits is the earliest time step at which the model is considered a good fit.</p>
+<p>Model fits and data with residuals are shown. Start time is the earliest step at which the model fits well.</p>
 <a class="reference internal image-reference" href="_images/fits_229.png"><img alt="fits_22.png" src="_images/fits_229.png" style="width: 600px;" />
 </a>
 <a class="reference internal image-reference" href="_images/fits_334.png"><img alt="fits_33.png" src="_images/fits_334.png" style="width: 600px;" />
@@ -124,7 +128,7 @@
 </section>
 <section id="epsilon">
 <h2>Epsilon<a class="headerlink" href="#epsilon" title="Link to this heading">¶</a></h2>
-<p>Using the model determined by the algorithm, the mass and spin of the remnant black hole are estimated, and compared to the values obtained from a fit containing all possible modes. The root square distance from the NR values is shown below. Also shown are a selection of posteriors at different start times.</p>
+<p>Remnant black hole mass and spin estimates are compared to NR values. Root square distance and posteriors at different start times are shown.</p>
 <a class="reference internal image-reference" href="_images/epsilon.png"><img alt="epsilon.png" src="_images/epsilon.png" style="width: 600px;" />
 </a>
 <a class="reference internal image-reference" href="_images/posterior_10.09.png"><img alt="posterior_10.0.png" src="_images/posterior_10.09.png" style="width: 600px;" />
@@ -132,6 +136,12 @@
 <a class="reference internal image-reference" href="_images/posterior_30.09.png"><img alt="posterior_30.0.png" src="_images/posterior_30.09.png" style="width: 600px;" />
 </a>
 <a class="reference internal image-reference" href="_images/posterior_50.09.png"><img alt="posterior_50.0.png" src="_images/posterior_50.09.png" style="width: 600px;" />
+</a>
+</section>
+<section id="power-law-tails">
+<h2>Power Law Tails<a class="headerlink" href="#power-law-tails" title="Link to this heading">¶</a></h2>
+<p>PLT search at 50 M shows the corner plot for amplitude and reference time of the (2,2) PLT mode, as described in the paper’s Supplemental Material.</p>
+<a class="reference internal image-reference" href="_images/PLT_corner_22.png"><img alt="PLT_corner_22.png" src="_images/PLT_corner_22.png" style="width: 600px;" />
 </a>
 </section>
 </section>
@@ -166,10 +176,12 @@
 <li class="toctree-l1"><a class="reference internal" href="sim_0009.html">Simulation 0009</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Simulation 0010</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#mode-content">Mode Content</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#additional-notes">Additional Notes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nonlinear-mode-mixing-alternatives">Nonlinear Mode Mixing Alternatives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#amplitude-stability">Amplitude Stability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fits">Fits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#epsilon">Epsilon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#power-law-tails">Power Law Tails</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sim_0011.html">Simulation 0011</a></li>

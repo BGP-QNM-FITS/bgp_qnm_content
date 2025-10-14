@@ -42,7 +42,7 @@ Tuples of length 2 / 4 / 8 / 12 are constant terms / QNMs / quadratic QNMs / cub
 Mode Content
 ------------
 
-The start times at which particular QNMs are present in the simulation are shown below. Solid lines indicate prograde modes present, ordered by overtone number. Hatched lines indicate that the retrograde mode is also present. Grey shaded regions indicate the times at which the model is considered a poor fit. If there is no grey region, the model is considered a good fit at all times shown.
+Times QNMs are present is shown below. Solid lines indicate prograde modes, hatched lines indicate retrograde modes. Vertical grey shaded regions (where present) show poor fit times.
 
 Additional Notes
 ----------------
@@ -56,7 +56,7 @@ This simulation contains two instances of a retrograde mode present without a pr
 Amplitude Stability
 -------------------
 
-The decay-corrected amplitudes are shown below at a range of start times. With the median as a bold line, and 90\% region as shading around the line. Grey shaded regions indicate the times at which the model is considered a poor fit. If there is no grey region, the model is considered a good fit at all times shown.
+Decay-corrected amplitudes are shown with the median as a bold line and 90% region shaded. Vertical grey shaded regions (where present) show poor fit times.
 
 .. image:: figures/0004/amplitude_stability/amplitude_stability_22.png
    :width: 600px
@@ -69,7 +69,7 @@ The decay-corrected amplitudes are shown below at a range of start times. With t
 Fits
 ----
 
-Fits of the model and data are shown below, including residuals. The start time of the fits is the earliest time step at which the model is considered a good fit.
+Model fits and data with residuals are shown. Start time is the earliest step at which the model fits well.
 
 .. image:: figures/0004/fits/fits_22.png
    :width: 600px
@@ -82,7 +82,7 @@ Fits of the model and data are shown below, including residuals. The start time 
 Epsilon
 -------
 
-Using the model determined by the algorithm, the mass and spin of the remnant black hole are estimated, and compared to the values obtained from a fit containing all possible modes. The root square distance from the NR values is shown below. Also shown are a selection of posteriors at different start times.
+Remnant black hole mass and spin estimates are compared to NR values. Root square distance and posteriors at different start times are shown.
 
 .. image:: figures/0004/epsilon/epsilon.png
    :width: 600px

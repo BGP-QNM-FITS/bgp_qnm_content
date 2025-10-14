@@ -134,10 +134,10 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, spherical_modes
             elif len(mode) == 8 or len(mode) == 12:
                 p = 1
                 n = 0
-                alpha = 1.0 
+                alpha = 0.7
                 color = special_color_1
                 ls = nonlinear_linestyle.get(mode, '-')
-                lw = 1.5
+                lw = 1.2
 
             runs = masks(mode, t0_vals, full_modes_list)
             for run in runs:
@@ -178,6 +178,7 @@ def get_amplitude_stability_plot(sim_id, mode_content_data_dict, spherical_modes
         ax.legend(loc='upper right', frameon=False, fontsize=4.5, handlelength=3)
 
     axes[0].set_ylabel(r"$|\hat{C}_{\alpha}|$")
+    axes[0].set_ylim([5e-3, 400])
     plt.subplots_adjust(wspace=0.05) 
     plt.tight_layout()
     plt.savefig(f"paper_figures/amplitude_stability_{sim_id}.pdf", bbox_inches="tight")

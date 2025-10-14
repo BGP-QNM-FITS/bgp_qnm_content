@@ -212,7 +212,8 @@ def plot_residuals(sim_id, times, data, models, residuals, spherical_modes, plot
         plt.close()
 
 def __main__():
-    sim_ids = [f"{i:04}" for i in range(1, 14)]
+    #sim_ids = [f"{i:04}" for i in range(1, 14)]
+    sim_ids = ["0010", "0011", "0012", "0013"]
     for sim_id in sim_ids:
 
         sim = bgp.SXS_CCE(sim_id, type=DATA_TYPE, lev="Lev5", radius="R2")

@@ -334,12 +334,12 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
                 ha='center'
             )
 
-    #threshold_idx = next((i for i in reversed(range(len(p_values))) if p_values[i] > PVAL_THRESHOLD), None)
-    #if threshold_idx is not None and threshold_idx + 1 < len(t0_vals):
-    #    threshold_idx += 1
-    #    ax.axvspan(0, t0_vals[threshold_idx] - np.median(np.diff(t0_vals))/2, color='grey', alpha=0.2, zorder=0)
-    #else:
-    #    print(f"No threshold index found for simulation {sim_id}.")
+    threshold_idx = next((i for i in reversed(range(len(p_values))) if p_values[i] > PVAL_THRESHOLD), None)
+    if threshold_idx is not None and threshold_idx + 1 < len(t0_vals):
+        threshold_idx += 1
+        ax.axvspan(0, t0_vals[threshold_idx] - np.median(np.diff(t0_vals))/2, color='grey', alpha=0.2, zorder=0)
+    else:
+        print(f"No threshold index found for simulation {sim_id}.")
 
     ax.set_xlabel(r"Start time $t_0 \, [M]$")
     ax.set_ylabel("Mode $(\ell, m, n)$", fontsize=6)
@@ -352,7 +352,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
     plt.tight_layout()
     outdir = f"docs/figures/{sim_id}/mode_content"
     os.makedirs(outdir, exist_ok=True)
-    plt.savefig(f"{outdir}/mode_content_test.png", bbox_inches="tight")
+    plt.savefig(f"{outdir}/mode_content_D.png", bbox_inches="tight")
     plt.close()
 
 
@@ -361,7 +361,7 @@ def __main__():
     sim_ids = ["0010"]
     for sim_id in sim_ids:
 
-        with open(f'mode_content_files/mode_content_data_{sim_id}_merged.json', 'r') as f:
+        with open(f'mode_content_files/mode_content_data_{sim_id}_D.json', 'r') as f:
             mode_content_data_dict = json.load(f)
 
         t0_vals = np.array(mode_content_data_dict['times'])

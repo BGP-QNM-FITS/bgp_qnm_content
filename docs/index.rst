@@ -6,16 +6,30 @@
 QNM Content Site
 ============================================
 
+.. figure:: /front_page_figures/mode_content_0010.png
+   :alt: Mode content plot for simulation 0010
+   :align: center
+   :width: 100%
+
 This website contains links (on the left) to the mode content and amplitude stabilities of various target 
 modes at a range of start times for each of the 13 publicly available Cauchy characteristic evolved (CCE) 
 NR simulations provided by SXS (see `Moxon+ 2020 for more details on CCE <https://arxiv.org/abs/2007.01339>`_). 
 
 The simulations can be accessed `here <https://data.black-holes.org/waveforms/extcce_catalog.html>`_. 
 
-Each page also contains fits, residuals, and a comparison of the mass and spin posteriors to 
-models which do not dynamically remove QNMs at each t0. 
+Each page also contains fits, residuals, and a comparison of the mass and spin posteriors to the NR values. 
 
-The code used to produce the analyses and figures on this website is available `here <https://github.com/BGP-QNM-FITS/bgp_qnm_content>`_. 
+The code used to produce the analyses and figures on this website is available `here <https://github.com/BGP-QNM-FITS/bgp_qnm_content>`_.
+
+The methods used to produce the analyses and figures on this website are described in Dyer & Moore 2025. 
+
+We use a fully Bayesian framework to fit the ringdown, modelling the uncertainty on the waveforms, and giving posterior distributions on the QNM amplitudes, 
+remnant mass, and remnant spin. Example posteriors for the (2,2,n,+) QNMs at 10M are shown below. 
+
+.. figure:: /front_page_figures/corner_plot.png
+   :alt: Mode content plot for simulation 0010
+   :align: center
+   :width: 100%
 
 .. toctree::
    :maxdepth: 2

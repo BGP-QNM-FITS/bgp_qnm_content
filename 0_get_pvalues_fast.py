@@ -7,7 +7,7 @@ import numpy as np
 from collections import defaultdict
 from tqdm import tqdm
 
-SIM_ID = "0010"
+SIM_ID = "0013"
 
 main_dir = Path("mode_content_files")
 path = main_dir / f"mode_content_data_{SIM_ID}.json"

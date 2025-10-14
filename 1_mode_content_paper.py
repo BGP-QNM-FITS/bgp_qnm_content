@@ -293,8 +293,8 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
             (2,2,0,1,2,2,0,1): 54,
             (2,2,0,1,3,3,0,1): 54,
             (3,3,0,1,3,3,0,1): 54,
-            (2,2,0,1,4,4,0,1): 40,
-            (2,2,0,1,2,2,0,1,2,2,0,1): 23
+            (2,2,0,1,4,4,0,1): 31,
+            (2,2,0,1,2,2,0,1,2,2,0,1): 16
         }
 
     for nonlinear_mode in nonlinear_modes.keys():
@@ -334,6 +334,7 @@ def plot_mode_content_production(sim_id, mode_content_data_dict, t0_vals, spheri
     outdir = f"paper_figures"
     os.makedirs(outdir, exist_ok=True)
     plt.savefig(f"{outdir}/mode_content_{sim_id}.pdf", bbox_inches="tight")
+    plt.savefig(f"docs/front_page_figures/mode_content_{sim_id}.png", bbox_inches="tight")
     plt.close()
 
 
