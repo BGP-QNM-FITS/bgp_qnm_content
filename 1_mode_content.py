@@ -360,8 +360,12 @@ def plot_mode_content_production(
         if last_idx is not None and nonlinear_mode in y_positions:
             pos = y_positions.get(nonlinear_mode)
             x_pos = t0_vals[last_idx]
-            if x_pos == 58.0 or x_pos == 60.0:
-                x_pos -= 15
+            if x_pos == 58.0 or x_pos == 59.0 or x_pos == 60.0:
+                x_pos -= 4
+            if nonlinear_mode == (2,2,0,1,2,2,0,1,2,2,0,1):
+                x_pos = 23
+            elif nonlinear_mode == (2,2,0,1,4,4,0,1):
+                x_pos -= 3
             ax.text(
                 x_pos - 2,
                 pos + bar_height * 0.9,  # slightly above the bar
@@ -398,15 +402,16 @@ def plot_mode_content_production(
     plt.tight_layout()
     outdir = f"docs/figures/{sim_id}/mode_content"
     os.makedirs(outdir, exist_ok=True)
-    plt.savefig(f"{outdir}/mode_content_D.png", bbox_inches="tight")
+    plt.savefig(f"{outdir}/mode_content_Bii.png", bbox_inches="tight")
     plt.close()
 
 
 def __main__():
-    sim_ids = [f"{i:04}" for i in range(1, 14)]
+    #sim_ids = [f"{i:04}" for i in range(1, 14)]
+    sim_ids = ["0010"]
     for sim_id in sim_ids:
 
-        with open(f"mode_content_files/mode_content_data_{sim_id}_D.json", "r") as f:
+        with open(f"mode_content_files/mode_content_data_{sim_id}_B2.json", "r") as f:
             mode_content_data_dict = json.load(f)
 
         t0_vals = np.array(mode_content_data_dict["times"])

@@ -58,13 +58,13 @@ Nonlinear Mode Mixing Alternatives
 
 Prediction C of `Black-Hole Cartography <https://arxiv.org/abs/2410.13935>`_ is used. Results with predictions Bi, Bii, and D are also shown below.
 
-.. image:: figures/0010/nonlinear_mode_mixing_alternatives/mode_content_B1.png
+.. image:: figures/0010/nonlinear_mode_mixing_alternatives/mode_content_Bi.png
    :width: 600px
-   :alt: mode_content_B1.png
+   :alt: mode_content_Bi.png
 
-.. image:: figures/0010/nonlinear_mode_mixing_alternatives/mode_content_B2.png
+.. image:: figures/0010/nonlinear_mode_mixing_alternatives/mode_content_Bii.png
    :width: 600px
-   :alt: mode_content_B2.png
+   :alt: mode_content_Bii.png
 
 .. image:: figures/0010/nonlinear_mode_mixing_alternatives/mode_content_D.png
    :width: 600px

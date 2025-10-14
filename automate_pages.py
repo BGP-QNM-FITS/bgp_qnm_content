@@ -194,7 +194,7 @@ for sim_folder in sorted(os.listdir(figures_dir)):
                             f.write("Additional Notes\n----------------\n\n")
                             f.write(
                                 "This simulation contains four instances of a retrograde mode present without a prograde mode, "
-                                "which are not shown on the mode content plot. These are the (2, 2, 6, -) mode at timestep"
+                                "which are not shown on the mode content plot. These are the (2, 2, 6, -) mode at timestep "
                                 "t0 = 18.0 [M], and the (3, 2, 6, -) mode at timesteps t0 = 18.0 [M], t0 = 20.0 [M], and t0 = 28.0 [M]."
                                 "\n\n"
                             )
