@@ -20,7 +20,7 @@ The simulations can be accessed `here <https://data.black-holes.org/waveforms/ex
 Each page also contains fits, residuals, and a comparison of the mass and spin posteriors to the NR values. 
 
 The code used to produce the analyses and figures on this website is available `here <https://github.com/BGP-QNM-FITS/bgp_qnm_content>`_ 
-and the methods are described in Dyer & Moore 2025. 
+and the full Bayesian methodology is described in `Dyer & Moore 2025 <https://arxiv.org/pdf/2510.11783>`_.
 
 We use a fully Bayesian framework to fit the ringdown, model the uncertainty on the waveforms, and give posterior distributions on the QNM amplitudes, 
 remnant mass, and remnant spin. Example posteriors for the (2,2,n,+) QNMs at 10M are shown below. 
