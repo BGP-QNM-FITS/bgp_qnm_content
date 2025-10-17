@@ -1,7 +1,7 @@
-# BGP QNM Content
+# Bayesian QNM Content
 
-Bayesian determination of the quasinormal mode content of NR simulations.
+A companion repository for the paper [The quasinormal mode content of binary black hole ringdown (Dyer & Moore, submitted)](https://arxiv.org/pdf/2510.13954). This repo contains scripts and data used to produce the figures and analysis in the manuscript.
 
-Plots are available here: https://bgp-qnm-fits.github.io/bgp_qnm_content/
+Further plots are available here: https://bgp-qnm-fits.github.io/bgp_qnm_content/
 
-To use this code you will need to install [bgp_qnm_fits](https://github.com/Richardvnd/bgp_qnm_fits), which accompanies the paper *[Quasinormal modes from numerical relativity with Bayesian inference (Dyer & Moore, 2025)](https://arxiv.org/pdf/2510.11783)*.
+This code requires the package [bgp_qnm_fits](https://github.com/Richardvnd/bgp_qnm_fits), which accompanies the paper [Quasinormal modes from numerical relativity with Bayesian inference (Dyer & Moore, submitted)](https://arxiv.org/pdf/2510.11783).

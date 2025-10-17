@@ -152,7 +152,7 @@ Model fits and data with residuals are shown. Start time is the earliest step at
 Epsilon
 -------
 
-Remnant black hole mass and spin estimates are compared to NR values. Root square distance and posteriors at different start times are shown.
+Remnant black hole mass and spin estimates are compared to NR values. Root square distance and posteriors at different start times are shown. The star indicates the NR value.
 
 .. image:: figures/0013/epsilon/epsilon.png
    :width: 600px

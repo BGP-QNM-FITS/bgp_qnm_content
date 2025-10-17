@@ -87,7 +87,8 @@ descriptions = {
         "Model fits and data with residuals are shown. Start time is the earliest step at which the model fits well."
     ),
     "epsilon": (
-        "Remnant black hole mass and spin estimates are compared to NR values. Root square distance and posteriors at different start times are shown."
+        "Remnant black hole mass and spin estimates are compared to NR values. Root square distance and posteriors at different start times are shown. "
+        "The star indicates the NR value."
     ),
     "power_law_tails": (
         "PLT search at 50 M shows the corner plot for amplitude and reference time of the (2,2) PLT mode, as described in the paper's Supplemental Material."
